@@ -6,6 +6,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a **dotfiles repository** for macOS development environment management using GNU Stow. It tracks configuration files for shell (zsh), editor (Neovim), terminal multiplexer (tmux), window manager (AeroSpace), and package management (Homebrew).
 
+## Project Context
+
+This repository is managed as part of a larger personal knowledge management system in Obsidian. To understand the full context, decisions, and lessons learned, read these notes:
+
+**Project Notes** (read these for comprehensive project context):
+- `03-projects/03b-personal/project-personal-dot-files` - Main dotfiles project with scope, tasks, timeline
+- `03-projects/03b-personal/project-personal-aerospace-configuration` - AeroSpace window manager setup
+- `03-projects/03b-personal/project-personal-tmux-configuration` - tmux terminal multiplexer with gpakosz
+- `03-projects/03b-personal/project-personal-neovim-configuration` - Neovim editor configuration
+- `03-projects/03b-personal/project-personal-gnu-stow` - GNU Stow package management patterns
+
+**Research Notes** (read these for technical deep-dives):
+- `01-notes/01r-research/202510300130` - Current configuration audit (2025-10-30)
+- `01-notes/01r-research/202510292345` - Dotfiles: DRY Principle for Dev Environments
+- `01-notes/01r-research/202510292343` - GNU Stow: Symlink Farm Manager
+- `01-notes/01r-research/202510292342` - tmux: Terminal Multiplexer Mastery
+- `01-notes/01r-research/202510292341` - Neovim: Kickstart Philosophy & blink.cmp
+- `01-notes/01r-research/202510292348` - Terminal Workflow Setup
+
+**Important**: Use the `mcp__basic-memory__read_note` tool to read these notes when you need context about why decisions were made, what was tried before, or what's planned next. Do not assume - read the actual notes.
+
 ## Repository Architecture
 
 ### GNU Stow Pattern
