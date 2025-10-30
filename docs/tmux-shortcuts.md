@@ -21,9 +21,13 @@ Complete reference for tmux keybindings organized by importance.
 ### Window/Pane Creation
 | Shortcut | Description |
 |----------|-------------|
-| `prefix \|` | Split pane horizontally (custom) |
-| `prefix -` | Split pane vertically (custom) |
+| `prefix -` | Split pane horizontally - top/bottom (gpakosz) |
+| `prefix _` | Split pane vertically - left/right (gpakosz) |
 | `prefix c` | Create new window |
+
+**Note**: tmux terminology can be confusing:
+- "Horizontal split" = split into top/bottom panes (`-v` in tmux)
+- "Vertical split" = split into left/right panes (`-h` in tmux)
 
 ### Session Management
 | Shortcut | Description |
@@ -159,9 +163,9 @@ The configuration uses the [gpakosz Oh-my-tmux framework](https://github.com/gpa
 
 ## Configuration Files
 
-- **Base config**: `tmux.conf` (422 bytes) - Basic settings, plugin declarations
-- **Customizations**: `.tmux.conf.local` (19KB) - gpakosz overrides, theme colors
-- **Framework**: `~/.tmux-gpakosz/.tmux.conf` (external dependency)
+- **Framework**: `~/.tmux.conf` → symlink to `~/.tmux-gpakosz/.tmux.conf` (1889 lines, gpakosz Oh-my-tmux framework)
+- **Customizations**: `.tmux.conf.local` (19KB) - Custom bindings, theme colors, plugin settings
+- **Setup**: Framework must be cloned to `~/.tmux-gpakosz/` and symlinked
 
 ---
 

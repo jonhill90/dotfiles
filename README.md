@@ -87,8 +87,7 @@ exec zsh
 │   ├── lua/                    # Lua modules
 │   └── lazy-lock.json          # Plugin versions (gitignored)
 ├── tmux/
-│   ├── tmux.conf               # Basic tmux config
-│   └── .tmux.conf.local        # gpakosz customizations
+│   └── .tmux.conf.local        # gpakosz Oh-my-tmux customizations (19KB)
 ├── zsh/
 │   ├── .zshrc                  # Zsh config with Oh My Zsh
 │   └── .p10k.zsh               # Powerlevel10k theme config
@@ -144,12 +143,17 @@ exec zsh
 - **Floating Apps**: Finder, Bitwarden, Teams, Outlook
 
 ### Terminal Multiplexer (tmux)
-- **Framework**: gpakosz Oh-my-tmux
-- **Vi-mode**: Enabled
-- **Custom splits**:
-  - `|` - Horizontal split
-  - `-` - Vertical split
-- **Plugin**: vim-tmux-navigator (Ctrl+HJKL navigation between vim and tmux)
+- **Framework**: gpakosz Oh-my-tmux (external dependency at `~/.tmux-gpakosz/`)
+- **Config**: `.tmux.conf.local` for customizations (main `.tmux.conf` is symlinked to framework)
+- **Vi-mode**: Enabled for copy mode
+- **Pane splits**:
+  - `prefix -` - Horizontal split (top/bottom panes)
+  - `prefix _` - Vertical split (left/right panes)
+- **Navigation**:
+  - `Ctrl+HJKL` - Seamless navigation between vim and tmux panes (vim-tmux-navigator)
+  - `prefix HJKL` - Select panes (gpakosz vi-style, repeatable)
+  - `prefix Shift+HJKL` - Resize panes (gpakosz)
+- **Plugins**: vim-tmux-navigator (managed by TPM)
 
 ### Git
 - Minimal configuration tracked
