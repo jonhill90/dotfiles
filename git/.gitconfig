@@ -1,0 +1,5 @@
+[user]
+	name = Jon Hill
+	email = jonhill90@live.com
+[pull]
+	rebase = true
