@@ -171,6 +171,13 @@ exec zsh
 - Neovim: Space as leader key
 - Consistent muscle memory
 
+## Shortcuts Reference
+
+Comprehensive keybinding documentation organized by importance (Essential → Common → Advanced):
+
+- **[tmux Shortcuts](docs/tmux-shortcuts.md)** - Complete tmux keybindings including gpakosz Oh-my-tmux framework shortcuts
+- **[Neovim Shortcuts](docs/nvim-shortcuts.md)** - Complete Neovim/Kickstart keybindings including LSP, Telescope, and plugins
+
 ## Customization
 
 ### Machine-Specific Overrides

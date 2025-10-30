@@ -31,6 +31,14 @@ This repo has mandatory external dependencies that must be installed separately:
 - **gpakosz/.tmux** - tmux framework (`~/.tmux-gpakosz/` must be cloned)
 - **Homebrew** - Package manager (all tools installed via Brewfile)
 
+## Documentation Structure
+
+- **README.md** - Quick start guide and overview
+- **CLAUDE.md** - This file, context for AI assistants
+- **docs/** - Detailed documentation
+  - **tmux-shortcuts.md** - Complete tmux keybindings (Essential → Common → Advanced)
+  - **nvim-shortcuts.md** - Complete Neovim keybindings (Essential → Common → Advanced)
+
 ## Common Commands
 
 ### Installing Dotfiles on New Machine
