@@ -18,6 +18,7 @@ This repository is managed as part of a larger personal knowledge management sys
 - `03-projects/03b-personal/project-personal-gnu-stow` - GNU Stow package management patterns
 
 **Research Notes** (read these for technical deep-dives):
+- `01-notes/01r-research/202510312014` - GNU Stow Hands-On Learning Session (2025-10-31)
 - `01-notes/01r-research/202510300130` - Current configuration audit (2025-10-30)
 - `01-notes/01r-research/202510292345` - Dotfiles: DRY Principle for Dev Environments
 - `01-notes/01r-research/202510292343` - GNU Stow: Symlink Farm Manager
@@ -40,11 +41,13 @@ Example: `zsh/.zshrc` stows to `~/.zshrc`
 Example: `nvim/.config/nvim/init.lua` stows to `~/.config/nvim/init.lua`
 
 ### Key Packages
-- **aerospace** - AeroSpace window manager (220-line TOML config with app launchers)
+- **aerospace** - AeroSpace window manager config at `~/.aerospace.toml` (NOT in `.config/`)
 - **git** - Minimal Git config (uses `.gitconfig.local` pattern for machine-specific settings)
 - **nvim** - Kickstart.nvim base with Tokyo Night theme, Terraform & Lua LSPs
 - **tmux** - Relies on external gpakosz framework + custom `.tmux.conf.local`
 - **zsh** - Oh My Zsh + Powerlevel10k (89KB `.p10k.zsh` customization)
+
+**Important:** Not all configs follow the `~/.config/` pattern. Check actual file locations before creating package structures.
 
 ### External Dependencies
 This repo has mandatory external dependencies that must be installed separately:
@@ -63,15 +66,30 @@ This repo has mandatory external dependencies that must be installed separately:
 ## Common Commands
 
 ### Installing Dotfiles on New Machine
+
+**Automated (Recommended):**
+```bash
+git clone https://github.com/jonhill90/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+./install.sh
+
+# Install Oh-my-tmux framework (not in install.sh yet)
+git clone https://github.com/gpakosz/.tmux.git ~/.tmux-gpakosz
+ln -s -f ~/.tmux-gpakosz/.tmux.conf ~/.tmux.conf
+
+exec zsh
+```
+
+**Manual (if needed):**
 ```bash
 # 1. Clone repo
-git clone <repo-url> ~/.dotfiles && cd ~/.dotfiles
+git clone https://github.com/jonhill90/dotfiles.git ~/.dotfiles && cd ~/.dotfiles
 
 # 2. Install all Homebrew packages
 brew bundle install
 
-# 3. Symlink configs (requires GNU Stow)
-stow aerospace git nvim tmux zsh
+# 3. Symlink configs with EXPLICIT --target flag (IMPORTANT!)
+stow --target="$HOME" aerospace git nvim tmux zsh
 
 # 4. Install Oh-my-tmux framework
 git clone https://github.com/gpakosz/.tmux.git ~/.tmux-gpakosz
@@ -80,6 +98,8 @@ ln -s -f ~/.tmux-gpakosz/.tmux.conf ~/.tmux.conf
 # 5. Restart shell
 exec zsh
 ```
+
+**Critical:** When dotfiles repo is deeply nested (like `~/source/repos/Personal/dotfiles`), stow cannot reliably auto-detect the home directory. Always use `--target="$HOME"` explicitly.
 
 ### Managing Configurations
 
@@ -98,18 +118,21 @@ mkdir -p newapp/.config/newapp
 # 2. Copy config
 cp ~/.config/newapp/config newapp/.config/newapp/
 
-# 3. Stow it
-stow newapp
+# 3. Stow it with explicit target
+stow --target="$HOME" newapp
+
+# 4. Verify
+ls -la ~/.config/newapp  # Should show symlink with 'l' and '->'
 ```
 
 **Remove symlinks:**
 ```bash
-stow -D package_name  # Unstow (remove symlinks)
+stow -D --target="$HOME" package_name  # Unstow (remove symlinks)
 ```
 
 **Reinstall symlinks:**
 ```bash
-stow -R package_name  # Restow (remove + recreate symlinks)
+stow -R --target="$HOME" package_name  # Restow (remove + recreate symlinks)
 ```
 
 ### Testing Changes

@@ -23,53 +23,69 @@ Personal development environment configuration for macOS. Tracks shell, editor, 
 
 ## Quick Start
 
-### Prerequisites
+### Automated Installation (Recommended)
+
+```bash
+# Clone this repo
+git clone https://github.com/jonhill90/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+
+# Run the install script
+./install.sh
+
+# Install Oh-my-tmux (gpakosz framework)
+git clone https://github.com/gpakosz/.tmux.git ~/.tmux-gpakosz
+ln -s -f ~/.tmux-gpakosz/.tmux.conf ~/.tmux.conf
+
+# Restart your shell
+exec zsh
+
+# Reload AeroSpace config
+# Press: Alt+Shift+; then Escape
+```
+
+The `install.sh` script will:
+- Install Homebrew packages from Brewfile
+- Install GNU Stow if needed
+- Create all symlinks automatically
+
+### Manual Installation
+
+If you prefer to do it step by step:
+
+1. **Prerequisites**
 ```bash
 # Install Homebrew (if not already installed)
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# Install Git (via Homebrew or Xcode Command Line Tools)
+# Install Git
 xcode-select --install
 ```
 
-### Installation
-
-1. Clone this repo:
+2. **Clone and install packages**
 ```bash
-git clone https://github.com/YOUR_USERNAME/dotfiles.git ~/.dotfiles
+git clone https://github.com/jonhill90/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-```
-
-2. Install packages from Brewfile:
-```bash
 brew bundle install
 ```
 
-3. Symlink configurations using GNU Stow:
+3. **Create symlinks with GNU Stow**
 ```bash
-# Install Stow
-brew install stow
+# IMPORTANT: Must use explicit --target for reliability
+stow --target="$HOME" git zsh tmux aerospace nvim
 
-# Symlink all configs
-stow aerospace git nvim tmux zsh
-
-# Or symlink individually
-stow zsh      # Creates ~/.zshrc and ~/.p10k.zsh
-stow nvim     # Creates ~/.config/nvim/
-stow git      # Creates ~/.gitconfig
-stow aerospace # Creates ~/.config/aerospace/aerospace.toml
-stow tmux     # Creates ~/.tmux.conf.local
+# Verify symlinks were created
+ls -la ~ | grep -E "gitconfig|zshrc|tmux|aerospace"
+# Look for 'l' at start and '->' arrow
 ```
 
-4. Install Oh-my-tmux (gpakosz framework):
+4. **Install Oh-my-tmux**
 ```bash
-cd
 git clone https://github.com/gpakosz/.tmux.git ~/.tmux-gpakosz
 ln -s -f ~/.tmux-gpakosz/.tmux.conf ~/.tmux.conf
-# Your .tmux.conf.local is already symlinked from dotfiles
 ```
 
-5. Restart your shell:
+5. **Restart shell**
 ```bash
 exec zsh
 ```
@@ -78,8 +94,8 @@ exec zsh
 
 ```
 ~/.dotfiles/
-├── aerospace/.config/aerospace/
-│   └── aerospace.toml          # AeroSpace window manager config
+├── aerospace/
+│   └── .aerospace.toml         # AeroSpace window manager config
 ├── git/
 │   └── .gitconfig              # Git configuration
 ├── nvim/.config/nvim/
@@ -87,14 +103,27 @@ exec zsh
 │   ├── lua/                    # Lua modules
 │   └── lazy-lock.json          # Plugin versions (gitignored)
 ├── tmux/
-│   └── .tmux.conf.local        # gpakosz Oh-my-tmux customizations (19KB)
+│   └── .tmux.conf.local        # gpakosz Oh-my-tmux customizations
 ├── zsh/
 │   ├── .zshrc                  # Zsh config with Oh My Zsh
 │   └── .p10k.zsh               # Powerlevel10k theme config
 ├── Brewfile                     # All Homebrew packages
+├── install.sh                   # Automated setup script
 ├── .gitignore
 └── README.md
 ```
+
+**How GNU Stow maps these to your home directory:**
+```
+dotfiles/git/.gitconfig              → ~/.gitconfig
+dotfiles/zsh/.zshrc                  → ~/.zshrc
+dotfiles/zsh/.p10k.zsh               → ~/.p10k.zsh
+dotfiles/tmux/.tmux.conf.local       → ~/.tmux.conf.local
+dotfiles/aerospace/.aerospace.toml   → ~/.aerospace.toml
+dotfiles/nvim/.config/nvim/          → ~/.config/nvim/
+```
+
+The package name (first directory) is stripped, everything after mirrors your home directory.
 
 ## Tool Details
 
@@ -210,9 +239,15 @@ mkdir -p newapp/.config/newapp
 cp ~/.config/newapp/config newapp/.config/newapp/
 ```
 
-3. Stow it:
+3. Stow it with explicit target:
 ```bash
-stow newapp
+stow --target="$HOME" newapp
+```
+
+4. Verify the symlink:
+```bash
+ls -la ~/.config/newapp
+# Should show 'l' at start and '->' arrow
 ```
 
 ## Maintenance
@@ -281,10 +316,23 @@ ls -la ~/
 # Remove existing files (backup first!)
 mv ~/.zshrc ~/.zshrc.backup
 
-# Re-stow
+# Re-stow with explicit target
 cd ~/.dotfiles
-stow zsh
+stow --target="$HOME" zsh
+
+# Verify it worked
+ls -la ~ | grep zshrc
+# Should show: lrwxr-xr-x ... .zshrc -> source/repos/Personal/dotfiles/zsh/.zshrc
 ```
+
+### Stow says "already stowed" but symlink doesn't exist
+This happens when dotfiles repo is deeply nested. Solution:
+```bash
+cd ~/.dotfiles
+stow --target="$HOME" PACKAGE_NAME
+```
+
+Use explicit `--target="$HOME"` instead of relying on auto-detection.
 
 ### AeroSpace not loading config
 ```bash
