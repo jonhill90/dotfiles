@@ -88,7 +88,7 @@ git clone https://github.com/jonhill90/dotfiles.git ~/.dotfiles && cd ~/.dotfile
 # 2. Install all Homebrew packages
 brew bundle install
 
-# 3. Symlink configs with EXPLICIT --target flag (IMPORTANT!)
+# 3. Symlink configs
 stow --target="$HOME" aerospace git nvim tmux zsh
 
 # 4. Install Oh-my-tmux framework
@@ -99,7 +99,7 @@ ln -s -f ~/.tmux-gpakosz/.tmux.conf ~/.tmux.conf
 exec zsh
 ```
 
-**Critical:** When dotfiles repo is deeply nested (like `~/source/repos/Personal/dotfiles`), stow cannot reliably auto-detect the home directory. Always use `--target="$HOME"` explicitly.
+**Note:** This repository should be cloned to `~/.dotfiles` as shown above. The `--target="$HOME"` flag ensures symlinks are created correctly.
 
 ### Managing Configurations
 

@@ -322,17 +322,18 @@ stow --target="$HOME" zsh
 
 # Verify it worked
 ls -la ~ | grep zshrc
-# Should show: lrwxr-xr-x ... .zshrc -> source/repos/Personal/dotfiles/zsh/.zshrc
+# Should show: lrwxr-xr-x ... .zshrc -> .dotfiles/zsh/.zshrc
 ```
 
-### Stow says "already stowed" but symlink doesn't exist
-This happens when dotfiles repo is deeply nested. Solution:
+### Stow conflicts with existing files
 ```bash
-cd ~/.dotfiles
-stow --target="$HOME" PACKAGE_NAME
-```
+# Backup the conflicting file first
+mv ~/.zshrc ~/.zshrc.backup
 
-Use explicit `--target="$HOME"` instead of relying on auto-detection.
+# Then stow
+cd ~/.dotfiles
+stow --target="$HOME" zsh
+```
 
 ### AeroSpace not loading config
 ```bash
