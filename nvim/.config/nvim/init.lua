@@ -192,13 +192,10 @@ vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, { desc = '[D]iagnos
 --
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
-vim.keymap.set('n', '<leader>nf', '<cmd>enew<cr>', { desc = '[F]ile [N]ew' })
-vim.keymap.set('n', '<leader>nt', '<cmd>tabnew<CR>', { desc = '[N]ew [T]ab' })
+vim.keymap.set('n', '<leader>nb', '<cmd>enew<cr>', { desc = '[N]ew [B]uffer' })
 
 -- Close / Quit keymaps
-vim.keymap.set('n', '<leader>qf', '<cmd>bdelete<CR>', { desc = '[Q]uit [F]ile/Buffer' })
-vim.keymap.set('n', '<leader>qt', '<cmd>tabclose<CR>', { desc = '[Q]uit [T]ab' })
-vim.keymap.set('n', '<leader>qa', '<cmd>tabonly<CR>', { desc = '[Q]uit [A]ll other tabs' })
+vim.keymap.set('n', '<leader>qq', '<cmd>bdelete<CR>', { desc = '[Q]uit [Q]uit Buffer' })
 vim.keymap.set('t', '<C-e>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- TIP: Disable arrow keys in normal mode
@@ -362,11 +359,12 @@ require('lazy').setup({
       -- Document existing key chains
       spec = {
         { '<leader>s', group = '[S]earch' },
-        { '<leader>t', group = '[T]oggle' },
+        { '<leader>t', group = '[T]oggle/[T]erminal' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
         { '<leader>n', group = '[N]ew' },
-        { '<leader>q', group = '[Q]uit' },
+        { '<leader>q', group = '[Q]uit/Close' },
         { '<leader>d', group = '[D]iagnostics' },
+        { '<leader>b', group = '[B]uffer' },
       },
     },
   },
@@ -1097,17 +1095,17 @@ require('lazy').setup({
       end
 
       -- Keymaps under [N]ew
-      vim.keymap.set('n', '<leader>nn', function()
+      vim.keymap.set('n', '<leader>nt', function()
         local count = next_term_count()
         Terminal:new({ count = count, direction = 'float', close_on_exit = false }):toggle()
-      end, { desc = '[N]ew floating [N]terminal' })
+      end, { desc = '[N]ew [T]erminal (floating)' })
 
-      vim.keymap.set('n', '<leader>nN', function()
+      vim.keymap.set('n', '<leader>nh', function()
         local count = next_term_count()
         Terminal:new({ count = count, direction = 'horizontal', size = 15, close_on_exit = false }):toggle()
-      end, { desc = '[N]ew horizontal [N]terminal' })
+      end, { desc = '[N]ew [H]orizontal terminal' })
 
-      vim.keymap.set('n', '<leader>nV', function()
+      vim.keymap.set('n', '<leader>nv', function()
         local count = next_term_count()
         Terminal:new({ count = count, direction = 'vertical', size = 80, close_on_exit = false }):toggle()
       end, { desc = '[N]ew [V]ertical terminal' })
@@ -1138,9 +1136,9 @@ require('lazy').setup({
         if term then
           term:toggle()
         else
-          vim.notify('No terminal to toggle (create one with <leader>nn)', vim.log.levels.INFO)
+          vim.notify('No terminal to toggle (create one with <leader>nt)', vim.log.levels.INFO)
         end
-      end, { desc = '[T]oggle current [T]erminal' })
+      end, { desc = '[T]oggle [T]erminal' })
     end,
   },
   {
@@ -1178,7 +1176,7 @@ require('lazy').setup({
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
