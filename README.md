@@ -12,7 +12,7 @@ Personal development environment configuration for macOS. Tracks shell, editor, 
 ## What's Included
 
 ### Core Configs
-- **zsh** - Shell with Oh My Zsh, Powerlevel10k theme, FZF integration
+- **zsh** - Shell with Oh My Zsh, Powerlevel10k theme, modern CLI tools (zoxide, atuin, carapace, fzf)
 - **nvim** - Neovim with Kickstart base, Tokyo Night theme, Terraform & Lua LSPs
 - **tmux** - Terminal multiplexer with gpakosz Oh-my-tmux framework
 - **git** - Git configuration
@@ -130,11 +130,17 @@ The package name (first directory) is stripped, everything after mirrors your ho
 ### Shell (zsh)
 - **Framework**: Oh My Zsh
 - **Theme**: Powerlevel10k (heavily customized 89KB config)
-- **Integrations**: FZF with ag (silver searcher)
+- **Modern CLI Tools**:
+  - **zoxide** - Smart directory jumping (frecency-based `cd` replacement)
+  - **atuin** - Searchable shell history with SQLite backend and sync
+  - **carapace** - Advanced tab completions with descriptions for 1000+ commands
+  - **fzf** - Fuzzy finder with ag (silver searcher) integration
 - **Editor**: nvim (local), vim (SSH)
 - **Aliases**:
   - `inv` - Open nvim with fzf file picker and bat preview
   - `vi` - Alias to nvim
+  - `z` - Jump to directory (zoxide)
+  - `zi` - Interactive directory selection (zoxide + fzf)
 
 ### Editor (Neovim)
 - **Base**: Kickstart.nvim (TJ DeVries' template)
@@ -278,6 +284,9 @@ See `Brewfile` for complete list. Key tools:
 - neovim
 - tmux
 - fzf
+- zoxide - Smart directory jumping
+- atuin - Shell history manager
+- carapace - Advanced completions
 - the_silver_searcher (ag)
 - bat
 - stow
@@ -291,14 +300,16 @@ See `Brewfile` for complete list. Key tools:
 
 ## Roadmap
 
+### Recently Added
+- [x] zoxide (smart directory navigation)
+- [x] atuin (shell history search)
+- [x] carapace (advanced completions)
+
 ### Planned (Future Projects)
 - [ ] Starship prompt (alternative to Powerlevel10k)
 - [ ] iTerm2 profile export
 - [ ] Zsh vi-mode configuration
 - [ ] Additional LSPs (Python, JSON, YAML, Shell, Kubernetes)
-- [ ] zoxide (smart directory navigation)
-- [ ] atuin (shell history search)
-- [ ] carapace (advanced completions)
 
 ### Out of Scope
 - macOS system preferences (manual setup)

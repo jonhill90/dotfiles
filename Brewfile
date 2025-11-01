@@ -9,16 +9,20 @@ tap "sst/tap"
 brew "openssl@3"
 # Automate deployment, configuration, and upgrading
 brew "ansible"
+# Improved shell history for zsh, bash, fish and nushell
+brew "atuin", restart_service: :changed
 # Microsoft Azure CLI 2.0
 brew "azure-cli"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
-# Platform built on V8 to build network applications
+# Open-source, cross-platform JavaScript runtime environment
 brew "node"
 # Secure and free password manager for all of your devices
 brew "bitwarden-cli"
+# Multi-shell multi-command argument completer
+brew "carapace"
 # Console Matrix
 brew "cmatrix"
 # GNU File, Shell, and Text utilities
@@ -49,6 +53,8 @@ brew "powerlevel10k"
 brew "ripgrep"
 # Static analysis and lint tool, for (ba)sh scripts
 brew "shellcheck"
+# Organize software neatly under a single directory tree (e.g. /usr/local)
+brew "stow"
 # TOML toolkit written in Rust
 brew "taplo"
 # Tool to build, change, and version infrastructure
@@ -63,6 +69,8 @@ brew "tree"
 brew "wakeonlan"
 # Internet file retriever
 brew "wget"
+# Shell extension to navigate your filesystem faster
+brew "zoxide"
 # Additional completion definitions for zsh
 brew "zsh-completions"
 # Command-line interface for the Databricks platform

@@ -82,6 +82,11 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 source <(fzf --zsh)
 
+# Modern CLI tools
+eval "$(zoxide init zsh)"           # Smart directory jumping
+eval "$(atuin init zsh)"            # Shell history on steroids
+source <(carapace _carapace)        # Better tab completions
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
