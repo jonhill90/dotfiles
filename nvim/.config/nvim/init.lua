@@ -743,7 +743,13 @@ require('lazy').setup({
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format Lua code
+        'stylua', -- Lua formatter
+        'prettier', -- JSON, YAML, TypeScript, JavaScript formatter
+        'black', -- Python formatter
+        'shfmt', -- Shell script formatter
+        'terraform-ls', -- Terraform LSP (includes formatting)
+        -- Note: powershell_es requires PowerShell to be installed
+        -- Note: terraform_fmt uses terraform CLI (should already be installed)
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -796,11 +802,22 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+        python = { 'black' },
+        terraform = { 'terraform_fmt' },
+        tf = { 'terraform_fmt' },
+        json = { 'prettier' },
+        jsonc = { 'prettier' },
+        yaml = { 'prettier' },
+        typescript = { 'prettier' },
+        javascript = { 'prettier' },
+        typescriptreact = { 'prettier' },
+        javascriptreact = { 'prettier' },
+        sh = { 'shfmt' },
+        bash = { 'shfmt' },
+        zsh = { 'shfmt' },
+        powershell = { 'powershell_es' },
+        -- Jupyter notebooks use ipynb extension, but formatters typically work on extracted code
+        -- Most people format the code cells via LSP or use nbqa with black
       },
     },
   },
