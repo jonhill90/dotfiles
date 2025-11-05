@@ -15,6 +15,7 @@ return {
   },
   opts = {
     filesystem = {
+      use_libuv_file_watcher = true, -- Enable real-time filesystem watching
       window = {
         mappings = {
           ['\\'] = 'close_window',
