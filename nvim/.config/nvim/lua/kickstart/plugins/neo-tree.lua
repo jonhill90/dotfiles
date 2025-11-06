@@ -22,5 +22,21 @@ return {
         },
       },
     },
+    event_handlers = {
+      {
+        event = 'git_status_changed',
+        handler = function()
+          require('neo-tree.sources.manager').refresh('filesystem')
+        end,
+      },
+      {
+        event = 'vim_buffer_changed',
+        handler = function()
+          require('neo-tree.sources.manager').refresh('git_status')
+        end,
+      },
+    },
+    enable_git_status = true,
+    enable_diagnostics = true,
   },
 }
