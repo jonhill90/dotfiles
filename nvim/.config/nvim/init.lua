@@ -186,6 +186,19 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>dl', vim.diagnostic.setloclist, { desc = '[D]iagnostics [L]ist (Quickfix)' })
 vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, { desc = '[D]iagnostics [F]loat' })
 
+-- Copy file path to clipboard
+vim.keymap.set('n', '<leader>yp', function()
+  local path = vim.fn.expand '%:p:~'
+  vim.fn.setreg('+', path)
+  vim.notify('Copied: ' .. path, vim.log.levels.INFO)
+end, { desc = '[Y]ank [P]ath (absolute with ~)' })
+
+vim.keymap.set('n', '<leader>yr', function()
+  local path = vim.fn.expand '%:.'
+  vim.fn.setreg('+', path)
+  vim.notify('Copied: ' .. path, vim.log.levels.INFO)
+end, { desc = '[Y]ank [R]elative path' })
+
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
@@ -437,11 +450,41 @@ require('lazy').setup({
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
+        defaults = {
+          mappings = {
+            i = {
+              -- ['<c-enter>'] = 'to_fuzzy_refine',
+              -- Copy file path to clipboard (insert mode)
+              ['<C-y>'] = function(prompt_bufnr)
+                local action_state = require 'telescope.actions.state'
+                local entry = action_state.get_selected_entry()
+                require('telescope.actions').close(prompt_bufnr)
+                if entry and entry.path then
+                  vim.fn.setreg('+', entry.path)
+                  vim.notify('Copied: ' .. entry.path, vim.log.levels.INFO)
+                elseif entry and entry.filename then
+                  vim.fn.setreg('+', entry.filename)
+                  vim.notify('Copied: ' .. entry.filename, vim.log.levels.INFO)
+                end
+              end,
+            },
+            n = {
+              -- Copy file path to clipboard (normal mode)
+              ['<C-y>'] = function(prompt_bufnr)
+                local action_state = require 'telescope.actions.state'
+                local entry = action_state.get_selected_entry()
+                require('telescope.actions').close(prompt_bufnr)
+                if entry and entry.path then
+                  vim.fn.setreg('+', entry.path)
+                  vim.notify('Copied: ' .. entry.path, vim.log.levels.INFO)
+                elseif entry and entry.filename then
+                  vim.fn.setreg('+', entry.filename)
+                  vim.notify('Copied: ' .. entry.filename, vim.log.levels.INFO)
+                end
+              end,
+            },
+          },
+        },
         -- pickers = {}
         extensions = {
           ['ui-select'] = {
