@@ -101,8 +101,8 @@ run = 'layout floating'
     # You can uncomment the following lines to open up terminal with alt + enter shortcut
     # (like in i3)
     alt-enter = '''exec-and-forget osascript -e '
-    tell application "Ghostty"
-        activate
+    tell application "System Events" to tell process "Ghostty"
+        click menu item "New Window" of menu "File" of menu bar 1
     end tell'
     '''
 
