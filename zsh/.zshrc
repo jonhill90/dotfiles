@@ -129,3 +129,9 @@ export PATH="$PATH:$HOME/bin"
 # Created by `pipx` on 2025-05-17 23:26:53
 export PATH="$PATH:/Users/jon/.local/bin"
 export KUBECONFIG=~/.kube/config-homelab
+
+# Custom terminal title - show only path, not username@hostname
+function set_term_title() {
+  print -Pn "\e]0;%~\a"
+}
+precmd_functions+=(set_term_title)
