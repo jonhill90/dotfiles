@@ -990,7 +990,78 @@ require('lazy').setup({
   },
 
   -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  {
+    'folke/todo-comments.nvim',
+    event = 'VimEnter',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    opts = {
+      signs = true,
+      keywords = {
+        FIX = { icon = " ", color = "error", alt = { "FIXME", "FIXIT", "ISSUE" } },
+        BUG = { icon = " ", color = "error" },
+        TODO = { icon = " ", color = "info" },
+        HACK = { icon = " ", color = "warning" },
+        WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+        PERF = { icon = " ", color = "default", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+        NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+        TEST = { icon = " ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+      },
+    },
+    keys = {
+      {
+        '<leader>sx',
+        '<cmd>TodoTelescope<cr>',
+        desc = '[S]earch fi[X]/todos',
+      },
+      {
+        ']t',
+        function()
+          require('todo-comments').jump_next()
+        end,
+        desc = 'Next todo comment',
+      },
+      {
+        '[t',
+        function()
+          require('todo-comments').jump_prev()
+        end,
+        desc = 'Previous todo comment',
+      },
+      {
+        ']x',
+        function()
+          require('todo-comments').jump_next { keywords = { 'FIX', 'BUG', 'FIXME', 'ISSUE' } }
+        end,
+        desc = 'Next error/bug',
+      },
+      {
+        '[x',
+        function()
+          require('todo-comments').jump_prev { keywords = { 'FIX', 'BUG', 'FIXME', 'ISSUE' } }
+        end,
+        desc = 'Previous error/bug',
+      },
+    },
+  },
+
+  -- Trouble - pretty diagnostics list
+  {
+    'folke/trouble.nvim',
+    opts = {},
+    cmd = 'Trouble',
+    keys = {
+      {
+        '<leader>tx',
+        '<cmd>Trouble diagnostics toggle<cr>',
+        desc = '[T]oggle diagnostics (Trouble)',
+      },
+      {
+        '<leader>tX',
+        '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
+        desc = '[T]oggle buffer diagnostics (Trouble)',
+      },
+    },
+  },
 
   -- Code folding with #region markers
   {
