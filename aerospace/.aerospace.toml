@@ -101,14 +101,13 @@ run = 'layout floating'
     # You can uncomment the following lines to open up terminal with alt + enter shortcut
     # (like in i3)
     alt-enter = '''exec-and-forget osascript -e '
-    tell application "iTerm"
-        create window with default profile
+    tell application "Ghostty"
         activate
     end tell'
     '''
 
     # Terminal
-    shift-ctrl-alt-cmd-shift-a = 'exec-and-forget open -a /Applications/iTerm.app'
+    shift-ctrl-alt-cmd-shift-a = 'exec-and-forget open -a /Applications/Ghostty.app'
 
     # Browser 
     shift-ctrl-alt-cmd-shift-b = 'exec-and-forget open -a /Applications/Arc.app'
