@@ -43,6 +43,7 @@ Example: `nvim/.config/nvim/init.lua` stows to `~/.config/nvim/init.lua`
 ### Key Packages
 - **aerospace** - AeroSpace window manager config at `~/.aerospace.toml` (NOT in `.config/`)
 - **git** - Minimal Git config (uses `.gitconfig.local` pattern for machine-specific settings)
+- **ghostty** - GPU-accelerated terminal emulator with transparency and blur
 - **nvim** - Kickstart.nvim base with Tokyo Night theme, Terraform & Lua LSPs
 - **tmux** - Relies on external gpakosz framework + custom `.tmux.conf.local`
 - **zsh** - Oh My Zsh + Powerlevel10k (89KB `.p10k.zsh` customization)
@@ -89,7 +90,7 @@ git clone https://github.com/jonhill90/dotfiles.git ~/.dotfiles && cd ~/.dotfile
 brew bundle install
 
 # 3. Symlink configs
-stow --target="$HOME" aerospace git nvim tmux zsh
+stow --target="$HOME" aerospace git ghostty nvim tmux zsh
 
 # 4. Install Oh-my-tmux framework
 git clone https://github.com/gpakosz/.tmux.git ~/.tmux-gpakosz
@@ -123,6 +124,13 @@ stow --target="$HOME" newapp
 
 # 4. Verify
 ls -la ~/.config/newapp  # Should show symlink with 'l' and '->'
+```
+
+**Example: Ghostty terminal emulator**
+```bash
+# Created structure: ghostty/.config/ghostty/config
+# Stowed with: stow --target="$HOME" ghostty
+# Result: ~/.config/ghostty -> ~/.dotfiles/ghostty/.config/ghostty
 ```
 
 **Remove symlinks:**
@@ -172,10 +180,18 @@ Uses `.local` pattern for machine-specific settings (gitignored):
 - **Custom dirs**: `lua/custom/plugins/` for user additions, `lua/kickstart/plugins/` from template
 
 ### AeroSpace (aerospace package)
-- **App launchers**: `Shift-Ctrl-Alt-Cmd-Shift` + letter bindings (A=iTerm, B=Arc, C=Claude, D=Discord, M=Music, N=Obsidian, O=Outlook, P=Bitwarden, T=Teams)
+- **App launchers**: `Shift-Ctrl-Alt-Cmd-Shift` + letter bindings (A=Ghostty, B=Arc, C=Claude, D=Discord, M=Music, N=Obsidian, O=Outlook, P=Bitwarden, T=Teams)
 - **Workspaces**: 1-5 assigned to main monitor, 6-10 assigned to secondary monitor
 - **Floating windows**: Finder, Bitwarden, Teams, Outlook configured to float
 - **Service mode**: `Alt+Shift+;` for config reload/reset operations
+
+### Ghostty (ghostty package)
+- **Config location**: `~/.config/ghostty/config` (follows XDG standard)
+- **Font**: FiraCode Nerd Font at 16pt with font-thicken enabled
+- **Appearance**: Background opacity 0.9 with blur, Display-P3 color space
+- **Theme**: iTerm2 Default
+- **Customizations**: Custom macOS dock icon, hidden tab bar (using tmux instead)
+- **Keybind overrides**: `super+t=ignore` (disabled new tab, using tmux)
 
 ### tmux (tmux package)
 - **Framework dependency**: Requires gpakosz repo at `~/.tmux-gpakosz/`
@@ -200,21 +216,17 @@ Uses `.local` pattern for machine-specific settings (gitignored):
 **Currently Implemented:**
 - Powerlevel10k theme (shell)
 - Tokyo Night theme (Neovim)
-- iTerm2 (terminal emulator - config not yet exported)
+- Ghostty terminal emulator (GPU-accelerated with transparency)
 - gpakosz tmux framework
 - Terraform & Lua LSPs only
 
 **In Roadmap** (planned but not implemented):
 - Starship prompt (alternative to Powerlevel10k)
-- iTerm2 profile export
 - Catppuccin theme (alternative theme option)
-- Ghostty/WezTerm terminal emulators
+- WezTerm terminal emulator (alternative to Ghostty)
 - Additional LSPs (Python, JSON, YAML, Shell, Kubernetes)
-- zoxide (smart directory navigation)
-- atuin (shell history search)
-- carapace (advanced completions)
 - Shell vi-mode
-- bootstrap.sh and install.sh scripts
+- bootstrap.sh improvements
 
 ## Troubleshooting Patterns
 

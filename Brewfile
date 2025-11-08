@@ -9,6 +9,8 @@ tap "sst/tap"
 brew "openssl@3"
 # Automate deployment, configuration, and upgrading
 brew "ansible"
+# GitOps Continuous Delivery for Kubernetes
+brew "argocd"
 # Improved shell history for zsh, bash, fish and nushell
 brew "atuin", restart_service: :changed
 # Microsoft Azure CLI 2.0
@@ -31,12 +33,22 @@ brew "coreutils"
 brew "curl"
 # Like neofetch, but much faster because written mostly in C
 brew "fastfetch"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
+# Play, record, convert, and stream audio and video
+brew "ffmpeg"
 # Command-line fuzzy finder written in Go
 brew "fzf"
 # Distributed revision control system
 brew "git"
 # Quickly rewrite git repository history
 brew "git-filter-repo"
+# Kubernetes package manager
+brew "helm"
+# Tools and libraries to manipulate images in many formats
+brew "imagemagick"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
 # Kubernetes CLI To Manage Your Clusters In Style!
 brew "k9s"
 # Kubernetes command-line interface
@@ -47,10 +59,16 @@ brew "neovim"
 brew "ollama", restart_service: :changed
 # Execute binaries from Python packages in isolated environments
 brew "pipx"
+# PDF rendering library (based on the xpdf-3.0 code base)
+brew "poppler"
 # Theme for zsh
 brew "powerlevel10k"
+# SVG rendering tool and library
+brew "resvg"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
+# 7-Zip is a file archiver with a high compression ratio
+brew "sevenzip"
 # Static analysis and lint tool, for (ba)sh scripts
 brew "shellcheck"
 # Organize software neatly under a single directory tree (e.g. /usr/local)
@@ -69,6 +87,8 @@ brew "tree"
 brew "wakeonlan"
 # Internet file retriever
 brew "wget"
+# Blazing fast terminal file manager written in Rust, based on async I/O
+brew "yazi"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
 # Additional completion definitions for zsh
@@ -91,6 +111,9 @@ cask "aerospace"
 cask "codex"
 # Menu bar weather app
 cask "datweatherdoe"
+cask "font-symbols-only-nerd-font"
+# Terminal emulator that uses platform-native UI and GPU acceleration
+cask "ghostty"
 # Development environment
 cask "hashicorp-vagrant"
 # GPU-based terminal emulator

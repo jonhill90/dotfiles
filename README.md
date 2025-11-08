@@ -15,6 +15,7 @@ Personal development environment configuration for macOS. Tracks shell, editor, 
 - **zsh** - Shell with Oh My Zsh, Powerlevel10k theme, modern CLI tools (zoxide, atuin, carapace, fzf)
 - **nvim** - Neovim with Kickstart base, Tokyo Night theme, Terraform & Lua LSPs
 - **tmux** - Terminal multiplexer with gpakosz Oh-my-tmux framework
+- **ghostty** - GPU-accelerated terminal emulator with transparency and blur effects
 - **git** - Git configuration
 - **aerospace** - AeroSpace tiling window manager for macOS
 
@@ -72,10 +73,11 @@ brew bundle install
 3. **Create symlinks with GNU Stow**
 ```bash
 # IMPORTANT: Must use explicit --target for reliability
-stow --target="$HOME" git zsh tmux aerospace nvim
+stow --target="$HOME" git zsh tmux aerospace nvim ghostty
 
 # Verify symlinks were created
 ls -la ~ | grep -E "gitconfig|zshrc|tmux|aerospace"
+ls -la ~/.config/ | grep ghostty
 # Look for 'l' at start and '->' arrow
 ```
 
@@ -98,6 +100,8 @@ exec zsh
 │   └── .aerospace.toml         # AeroSpace window manager config
 ├── git/
 │   └── .gitconfig              # Git configuration
+├── ghostty/.config/ghostty/
+│   └── config                  # Ghostty terminal config
 ├── nvim/.config/nvim/
 │   ├── init.lua                # Kickstart.nvim main config
 │   ├── lua/                    # Lua modules
@@ -121,6 +125,7 @@ dotfiles/zsh/.p10k.zsh               → ~/.p10k.zsh
 dotfiles/tmux/.tmux.conf.local       → ~/.tmux.conf.local
 dotfiles/aerospace/.aerospace.toml   → ~/.aerospace.toml
 dotfiles/nvim/.config/nvim/          → ~/.config/nvim/
+dotfiles/ghostty/.config/ghostty/    → ~/.config/ghostty/
 ```
 
 The package name (first directory) is stripped, everything after mirrors your home directory.
@@ -193,6 +198,17 @@ The package name (first directory) is stripped, everything after mirrors your ho
 ### Git
 - Minimal configuration tracked
 - Machine-specific settings (email, name) should go in `~/.gitconfig.local` (gitignored)
+
+### Terminal Emulator (Ghostty)
+- **GPU-accelerated** - Fast rendering with Metal/OpenGL
+- **Font**: FiraCode Nerd Font at 16pt with font-thicken enabled
+- **Appearance**:
+  - Background opacity: 0.9 with blur enabled
+  - Display-P3 color space for vibrant colors
+  - Custom macOS dock icon (black screen, white ghost)
+  - Tab bar hidden (using tmux for multiplexing)
+- **Theme**: iTerm2 Default
+- **Config location**: `~/.config/ghostty/config` (XDG standard)
 
 ## Keybind Philosophy
 
