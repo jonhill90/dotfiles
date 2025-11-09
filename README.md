@@ -1,403 +1,165 @@
 # dotfiles
 
-Personal development environment configuration for macOS. Tracks shell, editor, window manager, and tool configurations for rapid setup on new machines.
+macOS development environment with GNU Stow. Quick setup for shell, editor, window manager, and terminal.
 
 ## Philosophy
 
-- **Composable**: Each tool does one thing well
-- **Understandable**: Read every line, know what it does
-- **Vi-everywhere**: Consistent keybinds across shell, editor, window manager
-- **Minimal dependencies**: GNU Stow for symlinking, Homebrew for packages
+**Composable** · **Understandable** · **Vi-everywhere** · **Minimal**
 
-## What's Included
+## Stack
 
-### Core Configs
-- **zsh** - Shell with Oh My Zsh, Powerlevel10k theme, modern CLI tools (zoxide, atuin, carapace, fzf)
-- **nvim** - Neovim with Kickstart base, Tokyo Night theme, Terraform & Lua LSPs
-- **tmux** - Terminal multiplexer with gpakosz Oh-my-tmux framework
-- **ghostty** - GPU-accelerated terminal emulator with transparency and blur effects
-- **git** - Git configuration
-- **aerospace** - AeroSpace tiling window manager for macOS
+- **Shell**: zsh + Oh My Zsh + Powerlevel10k + modern CLI tools (zoxide, atuin, carapace, fzf)
+- **Editor**: Neovim (Kickstart.nvim + Tokyo Night + Terraform/Lua LSPs)
+- **Multiplexer**: tmux (minimal custom config + TPM plugins + Tokyo Night theme)
+- **Terminal**: Ghostty (GPU-accelerated with transparency)
+- **Window Manager**: AeroSpace (tiling for macOS)
+- **Package Manager**: Homebrew (Brewfile tracks everything)
 
-### Package Management
-- **Brewfile** - All Homebrew packages, casks, and fonts
-
-## Quick Start
-
-### Automated Installation (Recommended)
+## Installation
 
 ```bash
-# Clone this repo
+# Clone to ~/.dotfiles
 git clone https://github.com/jonhill90/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 
-# Run the install script
+# Run automated installer
 ./install.sh
 
-# Install Oh-my-tmux (gpakosz framework)
-git clone https://github.com/gpakosz/.tmux.git ~/.tmux-gpakosz
-ln -s -f ~/.tmux-gpakosz/.tmux.conf ~/.tmux.conf
+# Install TPM (Tmux Plugin Manager)
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-# Restart your shell
+# Reload shell and start tmux
 exec zsh
-
-# Reload AeroSpace config
-# Press: Alt+Shift+; then Escape
+tmux
+# In tmux: prefix + I to install plugins
+# AeroSpace: Alt+Shift+; then Escape
 ```
 
-The `install.sh` script will:
-- Install Homebrew packages from Brewfile
-- Install GNU Stow if needed
-- Create all symlinks automatically
+**What install.sh does:**
+- Installs Homebrew packages (Brewfile)
+- Installs GNU Stow
+- Creates all symlinks via Stow
+- **Note**: TPM must be installed separately (see above)
 
-### Manual Installation
-
-If you prefer to do it step by step:
-
-1. **Prerequisites**
+**Manual steps** (if needed):
 ```bash
-# Install Homebrew (if not already installed)
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# Install Git
-xcode-select --install
+brew bundle install                                  # Install packages
+stow --target="$HOME" git zsh tmux aerospace nvim ghostty  # Create symlinks
+ls -la ~ | grep -E "gitconfig|zshrc"                # Verify (look for 'l' and '->')
 ```
 
-2. **Clone and install packages**
-```bash
-git clone https://github.com/jonhill90/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
-brew bundle install
+## Structure
+
+**GNU Stow pattern** - Each directory is a "package" mirroring home directory:
+```
+zsh/.zshrc                  → ~/.zshrc
+nvim/.config/nvim/init.lua  → ~/.config/nvim/init.lua
+aerospace/.aerospace.toml   → ~/.aerospace.toml (NOT .config/)
 ```
 
-3. **Create symlinks with GNU Stow**
-```bash
-# IMPORTANT: Must use explicit --target for reliability
-stow --target="$HOME" git zsh tmux aerospace nvim ghostty
-
-# Verify symlinks were created
-ls -la ~ | grep -E "gitconfig|zshrc|tmux|aerospace"
-ls -la ~/.config/ | grep ghostty
-# Look for 'l' at start and '->' arrow
-```
-
-4. **Install Oh-my-tmux**
-```bash
-git clone https://github.com/gpakosz/.tmux.git ~/.tmux-gpakosz
-ln -s -f ~/.tmux-gpakosz/.tmux.conf ~/.tmux.conf
-```
-
-5. **Restart shell**
-```bash
-exec zsh
-```
-
-## Directory Structure
-
+**Key files:**
 ```
 ~/.dotfiles/
-├── aerospace/
-│   └── .aerospace.toml         # AeroSpace window manager config
-├── git/
-│   └── .gitconfig              # Git configuration
-├── ghostty/.config/ghostty/
-│   └── config                  # Ghostty terminal config
-├── nvim/.config/nvim/
-│   ├── init.lua                # Kickstart.nvim main config
-│   ├── lua/                    # Lua modules
-│   └── lazy-lock.json          # Plugin versions (gitignored)
-├── tmux/
-│   └── .tmux.conf.local        # gpakosz Oh-my-tmux customizations
-├── zsh/
-│   ├── .zshrc                  # Zsh config with Oh My Zsh
-│   └── .p10k.zsh               # Powerlevel10k theme config
-├── Brewfile                     # All Homebrew packages
-├── install.sh                   # Automated setup script
-├── .gitignore
-└── README.md
+├── git/.gitconfig          # Git base config
+├── zsh/.zshrc, .p10k.zsh   # Shell + theme (127 + 89KB)
+├── tmux/.tmux.conf         # Custom tmux (115 lines + TPM plugins)
+├── aerospace/.aerospace.toml  # Window manager
+├── nvim/.config/nvim/      # Editor (Kickstart + plugins)
+├── ghostty/.config/ghostty/config  # Terminal
+├── Brewfile                # Package manifest
+└── install.sh              # Automated setup
 ```
 
-**How GNU Stow maps these to your home directory:**
-```
-dotfiles/git/.gitconfig              → ~/.gitconfig
-dotfiles/zsh/.zshrc                  → ~/.zshrc
-dotfiles/zsh/.p10k.zsh               → ~/.p10k.zsh
-dotfiles/tmux/.tmux.conf.local       → ~/.tmux.conf.local
-dotfiles/aerospace/.aerospace.toml   → ~/.aerospace.toml
-dotfiles/nvim/.config/nvim/          → ~/.config/nvim/
-dotfiles/ghostty/.config/ghostty/    → ~/.config/ghostty/
-```
-
-The package name (first directory) is stripped, everything after mirrors your home directory.
-
-## Tool Details
-
-### Shell (zsh)
-- **Framework**: Oh My Zsh
-- **Theme**: Powerlevel10k (heavily customized 89KB config)
-- **Modern CLI Tools**:
-  - **zoxide** - Smart directory jumping (frecency-based `cd` replacement)
-  - **atuin** - Searchable shell history with SQLite backend and sync
-  - **carapace** - Advanced tab completions with descriptions for 1000+ commands
-  - **fzf** - Fuzzy finder with ag (silver searcher) integration
-- **Editor**: nvim (local), vim (SSH)
-- **Aliases**:
-  - `inv` - Open nvim with fzf file picker and bat preview
-  - `vi` - Alias to nvim
-  - `z` - Jump to directory (zoxide)
-  - `zi` - Interactive directory selection (zoxide + fzf)
-
-### Editor (Neovim)
-- **Base**: Kickstart.nvim (TJ DeVries' template)
-- **Plugin Manager**: lazy.nvim
-- **Theme**: Tokyo Night (tokyonight-night variant)
-- **LSP Servers** (via Mason):
-  - terraform - Terraform/HCL
-  - lua_ls - Lua
-- **Key Plugins**:
-  - Telescope - Fuzzy finder
-  - Treesitter - Syntax highlighting
-  - blink.cmp - Completion
-  - LuaSnip - Snippets
-  - neo-tree - File explorer
-  - gitsigns - Git integration
-  - conform.nvim - Formatting (stylua)
-- **Leader Key**: Space
-
-### Window Manager (AeroSpace)
-- **Navigation**: Vi-style (Alt+HJKL)
-- **Layouts**: Tiles (Alt+/) and Accordion (Alt+,)
-- **Workspaces**:
-  - 1-5 on main monitor
-  - 6-10 on secondary monitor
-- **App Launchers** (Shift-Ctrl-Alt-Cmd-Shift + key):
-  - A: iTerm
-  - B: Arc browser
-  - C: Claude
-  - D: Discord
-  - M: Music
-  - N: Obsidian
-  - O: Outlook
-  - P: Bitwarden
-  - T: Teams
-- **Floating Apps**: Finder, Bitwarden, Teams, Outlook
-
-### Terminal Multiplexer (tmux)
-- **Framework**: gpakosz Oh-my-tmux (external dependency at `~/.tmux-gpakosz/`)
-- **Config**: `.tmux.conf.local` for customizations (main `.tmux.conf` is symlinked to framework)
-- **Vi-mode**: Enabled for copy mode
-- **Pane splits**:
-  - `prefix -` - Horizontal split (top/bottom panes)
-  - `prefix _` - Vertical split (left/right panes)
-- **Navigation**:
-  - `Ctrl+HJKL` - Seamless navigation between vim and tmux panes (vim-tmux-navigator)
-  - `prefix HJKL` - Select panes (gpakosz vi-style, repeatable)
-  - `prefix Shift+HJKL` - Resize panes (gpakosz)
-- **Plugins**: vim-tmux-navigator (managed by TPM)
-
-### Git
-- Minimal configuration tracked
-- Machine-specific settings (email, name) should go in `~/.gitconfig.local` (gitignored)
-
-### Terminal Emulator (Ghostty)
-- **GPU-accelerated** - Fast rendering with Metal/OpenGL
-- **Font**: FiraCode Nerd Font at 16pt with font-thicken enabled
-- **Appearance**:
-  - Background opacity: 0.9 with blur enabled
-  - Display-P3 color space for vibrant colors
-  - Custom macOS dock icon (black screen, white ghost)
-  - Tab bar hidden (using tmux for multiplexing)
-- **Theme**: iTerm2 Default
-- **Config location**: `~/.config/ghostty/config` (XDG standard)
-
-## Keybind Philosophy
+## Keybinds
 
 **Vi motions everywhere:**
-- AeroSpace: Alt+HJKL for window focus
-- tmux: Ctrl+HJKL for pane navigation (with vim-tmux-navigator)
-- Neovim: Native HJKL
-- Shell: (future) Vi-mode in zsh
+- **AeroSpace**: `Alt+HJKL` (focus), `Alt+Shift+HJKL` (move)
+- **tmux**: `Ctrl+HJKL` (navigate panes/nvim via vim-tmux-navigator)
+- **Neovim**: Native `HJKL`, `Space` leader
 
-**Shift for movement:**
-- AeroSpace: Alt+Shift+HJKL moves windows
-- tmux: Vim-style pane management
+**See detailed shortcuts:**
+- [tmux keybindings](docs/tmux-shortcuts.md) - Essential → Advanced
+- [Neovim keybindings](docs/nvim-shortcuts.md) - Essential → Advanced
 
-**Space leader:**
-- Neovim: Space as leader key
-- Consistent muscle memory
+## Highlights
 
-## Shortcuts Reference
+**zsh aliases:**
+- `inv` - Nvim with fzf picker + bat preview
+- `vi` → `nvim`
+- `z <dir>` - Smart jump (zoxide)
+- `zi` - Interactive jump (zoxide + fzf)
 
-Comprehensive keybinding documentation organized by importance (Essential → Common → Advanced):
+**AeroSpace app launchers** (`Shift-Ctrl-Alt-Cmd` + key):
+- `A` Ghostty, `B` Arc, `C` Claude, `D` Discord, `M` Music, `N` Obsidian, `O` Outlook, `P` Bitwarden, `T` Teams
 
-- **[tmux Shortcuts](docs/tmux-shortcuts.md)** - Complete tmux keybindings including gpakosz Oh-my-tmux framework shortcuts
-- **[Neovim Shortcuts](docs/nvim-shortcuts.md)** - Complete Neovim/Kickstart keybindings including LSP, Telescope, and plugins
+**tmux splits** (`prefix = Ctrl+b` or `Ctrl+a`):
+- `prefix -` - Horizontal (top/bottom)
+- `prefix |` - Vertical (left/right)
+- `prefix r` - Reload config
 
-## Customization
+**Neovim:**
+- `<leader>sf` - Find files (Telescope)
+- `<leader>sg` - Live grep
+- `grd` - Go to definition
+- `K` - Hover docs
 
-### Machine-Specific Overrides
+## Usage
 
-Create local config files (gitignored):
+**Machine-specific overrides** (gitignored):
 ```bash
-# Git
-~/.gitconfig.local
-
-# Zsh
-~/.zshrc.local
-
-# Tmux
-~/.tmux.conf.local.override
+~/.gitconfig.local           # Git email, name
+~/.zshrc.local              # Shell customizations
+~/.tmux.conf.local          # tmux local overrides (optional)
 ```
 
-### Adding New Configs
-
-1. Create directory structure matching target path:
+**Add new package:**
 ```bash
 mkdir -p newapp/.config/newapp
-```
-
-2. Add config file:
-```bash
 cp ~/.config/newapp/config newapp/.config/newapp/
-```
-
-3. Stow it with explicit target:
-```bash
 stow --target="$HOME" newapp
+ls -la ~/.config/newapp  # Verify (look for 'l' and '->')
 ```
 
-4. Verify the symlink:
+**Update Brewfile after installing packages:**
 ```bash
-ls -la ~/.config/newapp
-# Should show 'l' at start and '->' arrow
-```
-
-## Maintenance
-
-### Update Brewfile
-```bash
-cd ~/.dotfiles
 brew bundle dump --describe --force
-git add Brewfile
-git commit -m "Update Brewfile"
 ```
 
-### Update Neovim Plugins
+**Update plugins:**
 ```bash
-# In Neovim
-:Lazy update
-```
-
-### Update Oh My Zsh
-```bash
-omz update
+:Lazy update     # Neovim (in editor)
+omz update       # Oh My Zsh
 ```
 
 ## Dependencies
 
-### Via Homebrew
-See `Brewfile` for complete list. Key tools:
-- neovim
-- tmux
-- fzf
-- zoxide - Smart directory jumping
-- atuin - Shell history manager
-- carapace - Advanced completions
-- the_silver_searcher (ag)
-- bat
-- stow
-- aerospace
-- iterm2
-- powerlevel10k
+**Homebrew** (see Brewfile):
+neovim, tmux, fzf, zoxide, atuin, carapace, the_silver_searcher, bat, stow, aerospace, powerlevel10k
 
-### Manual Installs
-- Oh My Zsh: https://ohmyz.sh/
-- gpakosz tmux: https://github.com/gpakosz/.tmux
-
-## Roadmap
-
-### Recently Added
-- [x] zoxide (smart directory navigation)
-- [x] atuin (shell history search)
-- [x] carapace (advanced completions)
-
-### Planned (Future Projects)
-- [ ] Starship prompt (alternative to Powerlevel10k)
-- [ ] iTerm2 profile export
-- [ ] Zsh vi-mode configuration
-- [ ] Additional LSPs (Python, JSON, YAML, Shell, Kubernetes)
-
-### Out of Scope
-- macOS system preferences (manual setup)
-- Secrets management (use 1Password)
-- SSH keys (manual, never commit private keys)
-- IDE configs beyond Neovim
+**Manual**:
+- [Oh My Zsh](https://ohmyz.sh/)
+- [TPM](https://github.com/tmux-plugins/tpm) (Tmux Plugin Manager)
 
 ## Troubleshooting
 
-### Symlinks not working
-```bash
-# Check what's already there
-ls -la ~/
+| Issue | Solution |
+|-------|----------|
+| **Stow conflicts** | `mv ~/.zshrc ~/.zshrc.backup` then restow |
+| **AeroSpace not loading** | `Alt+Shift+;` then `Escape` or `brew services restart aerospace` |
+| **Neovim plugins broken** | `:checkhealth` then `:Lazy restore` |
+| **tmux not applying** | `tmux source-file ~/.tmux.conf` or `tmux kill-server` |
+| **Verify symlinks** | `ls -la ~ \| grep zshrc` (should show `l` and `->`) |
 
-# Remove existing files (backup first!)
-mv ~/.zshrc ~/.zshrc.backup
+## Roadmap
 
-# Re-stow with explicit target
-cd ~/.dotfiles
-stow --target="$HOME" zsh
+**Recently added:** zoxide, atuin, carapace
+**Planned:** Starship prompt, Zsh vi-mode, additional LSPs (Python, JSON, YAML, Shell, K8s)
+**Out of scope:** macOS system preferences, secrets management, SSH keys, non-Neovim IDEs
 
-# Verify it worked
-ls -la ~ | grep zshrc
-# Should show: lrwxr-xr-x ... .zshrc -> .dotfiles/zsh/.zshrc
-```
+## Credits
 
-### Stow conflicts with existing files
-```bash
-# Backup the conflicting file first
-mv ~/.zshrc ~/.zshrc.backup
-
-# Then stow
-cd ~/.dotfiles
-stow --target="$HOME" zsh
-```
-
-### AeroSpace not loading config
-```bash
-# Reload config
-# Press: Alt+Shift+; then Escape
-
-# Or restart AeroSpace
-brew services restart aerospace
-```
-
-### Neovim plugins not loading
-```bash
-# In Neovim, check health
-:checkhealth
-
-# Reinstall plugins
-:Lazy restore
-```
-
-### tmux config not applying
-```bash
-# Source config
-tmux source-file ~/.tmux.conf
-
-# Or restart tmux
-tmux kill-server
-tmux
-```
+Built on: [Kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim) · [Oh My Zsh](https://ohmyz.sh/) · [Powerlevel10k](https://github.com/romkatv/powerlevel10k) · [AeroSpace](https://github.com/nikitabobko/AeroSpace) · [TPM](https://github.com/tmux-plugins/tpm)
 
 ## License
 
 MIT
-
-## Related Projects
-
-- [Kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim) - Neovim base config
-- [Oh my tmux!](https://github.com/gpakosz/.tmux) - tmux framework
-- [Oh My Zsh](https://ohmyz.sh/) - Zsh framework
-- [Powerlevel10k](https://github.com/romkatv/powerlevel10k) - Zsh theme
-- [AeroSpace](https://github.com/nikitabobko/AeroSpace) - macOS tiling window manager

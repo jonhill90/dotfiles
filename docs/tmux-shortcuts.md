@@ -1,33 +1,26 @@
 # tmux Shortcuts
 
-Complete reference for tmux keybindings organized by importance.
+**Config**: Minimal custom (115 lines) · Tokyo Night theme · TPM plugins
+**Prefix**: `Ctrl+b` (default) or `Ctrl+a` (secondary)
+**Plugins**: vim-tmux-navigator, tmux-yank, tmux-resurrect, tmux-continuum, tmux-fzf-url, tmux-sessionx
 
-**Prefix Key**: `Ctrl+b` (default tmux prefix)
+**Seamless navigation**: `Ctrl+h/j/k/l` works across tmux ↔ Neovim panes (vim-tmux-navigator)
 
 ---
 
 ## Essential (Daily Use)
 
-### Window/Pane Navigation
+### Seamless Navigation (No Prefix!)
 | Shortcut | Description |
 |----------|-------------|
-| `Ctrl+h` | Move to left pane (vim-tmux-navigator) |
-| `Ctrl+j` | Move to lower pane (vim-tmux-navigator) |
-| `Ctrl+k` | Move to upper pane (vim-tmux-navigator) |
-| `Ctrl+l` | Move to right pane (vim-tmux-navigator) |
-
-**Note**: These work seamlessly between Neovim and tmux panes (via vim-tmux-navigator plugin).
+| `Ctrl+h/j/k/l` | Move left/down/up/right between panes AND Neovim windows |
 
 ### Window/Pane Creation
 | Shortcut | Description |
 |----------|-------------|
-| `prefix -` | Split pane horizontally - top/bottom (gpakosz) |
-| `prefix _` | Split pane vertically - left/right (gpakosz) |
+| `prefix -` | Split horizontally (top/bottom) |
+| `prefix |` | Split vertically (left/right) |
 | `prefix c` | Create new window |
-
-**Note**: tmux terminology can be confusing:
-- "Horizontal split" = split into top/bottom panes (`-v` in tmux)
-- "Vertical split" = split into left/right panes (`-h` in tmux)
 
 ### Session Management
 | Shortcut | Description |
@@ -58,21 +51,17 @@ Complete reference for tmux keybindings organized by importance.
 |----------|-------------|
 | `prefix x` | Kill current pane |
 | `prefix z` | Toggle pane zoom (fullscreen) |
+| `prefix +` | Toggle pane zoom (custom alias) |
 | `prefix !` | Convert pane to window |
-| `prefix o` | Cycle through panes |
 | `prefix q` | Show pane numbers |
 | `prefix {` | Swap pane with previous |
 | `prefix }` | Swap pane with next |
 
-### Pane Resizing (gpakosz)
+### Pane Resizing
 | Shortcut | Description |
 |----------|-------------|
-| `prefix H` | Resize pane left |
-| `prefix J` | Resize pane down |
-| `prefix K` | Resize pane up |
-| `prefix L` | Resize pane right |
-| `prefix <` | Move pane position left |
-| `prefix >` | Move pane position right |
+| `prefix H/J/K/L` | Resize pane left/down/up/right (repeatable) |
+| `prefix </>`  | Swap pane position left/right |
 
 ### Copy Mode (Vi-style)
 | Shortcut | Description |
@@ -94,10 +83,11 @@ Complete reference for tmux keybindings organized by importance.
 | Shortcut | Description |
 |----------|-------------|
 | `prefix s` | List sessions (interactive) |
+| `prefix o` | Session picker with fzf (tmux-sessionx + zoxide) |
+| `prefix C-c` | Create new session |
+| `prefix C-f` | Find session |
 | `prefix $` | Rename current session |
-| `tmux new -s <name>` | Create named session (command line) |
-| `tmux ls` | List sessions (command line) |
-| `tmux kill-session -t <name>` | Kill named session (command line) |
+| `prefix BTab` | Switch to last session |
 
 ### Window/Pane Layouts
 | Shortcut | Description |
@@ -112,11 +102,11 @@ Complete reference for tmux keybindings organized by importance.
 ### Configuration & System
 | Shortcut | Description |
 |----------|-------------|
+| `prefix r` | Reload config (shows checkmark on status bar) |
+| `prefix e` | Edit config in nvim |
 | `prefix :` | Enter command mode |
-| `prefix r` | Reload tmux config (gpakosz) |
 | `prefix ?` | List all keybindings |
 | `prefix t` | Show clock |
-| `tmux source-file ~/.tmux.conf` | Reload config (command line) |
 
 ### Advanced Copy Mode
 | Shortcut | Description |
@@ -139,38 +129,34 @@ Complete reference for tmux keybindings organized by importance.
 
 ---
 
-## gpakosz Oh-my-tmux Specific
+## TPM Plugins
 
-The configuration uses the [gpakosz Oh-my-tmux framework](https://github.com/gpakosz/.tmux), which provides additional features:
+**vim-tmux-navigator** - Seamless `Ctrl+h/j/k/l` navigation between tmux/nvim
+**tmux-yank** - Better clipboard integration
+**tmux-resurrect** - Save/restore tmux sessions (auto-saves nvim sessions)
+**tmux-continuum** - Auto-restore on tmux start
+**tmux-fzf-url** - Fuzzy find URLs in terminal output
+**tmux-sessionx** - Enhanced session picker with fzf + zoxide (`prefix o`)
+**tmux-tokyo-night** - Tokyo Night theme with transparency
 
-### Additional Features
-- **Mouse support**: Enabled by default
-- **Status bar**: Custom theme with dark gray (#080808), light blue (#00afff), yellow (#ffff00)
-- **Vi-mode**: Enabled in copy mode
-- **Automatic rename**: Windows auto-rename based on running command
-- **Activity monitoring**: Visual notifications for activity in other windows
-
-### Framework-Specific Shortcuts
-| Shortcut | Description |
-|----------|-------------|
-| `prefix C-c` | Create new session |
-| `prefix C-f` | Find session |
-| `prefix +` | Maximize current pane |
-| `prefix m` | Toggle mouse mode |
-| `prefix Enter` | Enter copy mode |
+### Plugin Management
+| Command | Description |
+|---------|-------------|
+| `prefix I` | Install plugins (first time) |
+| `prefix U` | Update plugins |
+| `prefix alt+u` | Uninstall plugins |
 
 ---
 
-## Configuration Files
+## Configuration
 
-- **Framework**: `~/.tmux.conf` → symlink to `~/.tmux-gpakosz/.tmux.conf` (1889 lines, gpakosz Oh-my-tmux framework)
-- **Customizations**: `.tmux.conf.local` (19KB) - Custom bindings, theme colors, plugin settings
-- **Setup**: Framework must be cloned to `~/.tmux-gpakosz/` and symlinked
+**File**: `~/.dotfiles/tmux/.tmux.conf` (115 lines)
+**Features**: Dual prefix (Ctrl+b/Ctrl+a), vi-mode, mouse support, status bar on top, Tokyo Night theme
+**Plugins**: Managed by TPM at `~/.tmux/plugins/tpm`
 
----
-
-## Plugin: vim-tmux-navigator
-
-Seamless navigation between vim/nvim and tmux panes using `Ctrl+h/j/k/l`. Works automatically when plugin is installed via TPM.
-
-**Installation**: Automatically installed via TPM on first run (`prefix + I`)
+**Key config highlights**:
+- `base-index 1` - Windows start at 1
+- `escape-time 10` - Fast for vim
+- `history-limit 50000` - 50K lines scrollback
+- `set-clipboard on` - System clipboard integration
+- `detach-on-destroy off` - Don't exit tmux when closing last session

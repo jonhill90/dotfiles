@@ -1,8 +1,10 @@
 # Neovim Shortcuts
 
-Complete reference for Neovim keybindings from Kickstart.nvim configuration.
+**Config**: Kickstart.nvim · Tokyo Night theme · Terraform & Lua LSPs (Mason)
+**Leader**: `Space`
+**Plugins**: lazy.nvim, Telescope, Treesitter, blink.cmp, neo-tree, gitsigns, conform.nvim, GitHub Copilot
 
-**Leader Key**: `Space`
+**Seamless navigation**: `Ctrl+h/j/k/l` works across Neovim ↔ tmux panes (vim-tmux-navigator)
 
 ---
 
@@ -12,16 +14,11 @@ Complete reference for Neovim keybindings from Kickstart.nvim configuration.
 | Shortcut | Description |
 |----------|-------------|
 | `h/j/k/l` | Left/Down/Up/Right (vi-motion) |
-| `Ctrl+h` | Move to left window |
-| `Ctrl+j` | Move to lower window |
-| `Ctrl+k` | Move to upper window |
-| `Ctrl+l` | Move to right window |
+| `Ctrl+h/j/k/l` | Move to left/down/up/right window (works with tmux!) |
 | `Ctrl+u` | Scroll up half page |
 | `Ctrl+d` | Scroll down half page |
 | `gg` | Go to top of file |
 | `G` | Go to bottom of file |
-
-**Note**: Window navigation (`Ctrl+h/j/k/l`) works seamlessly with tmux panes via vim-tmux-navigator.
 
 ### File Operations
 | Shortcut | Description |
@@ -295,35 +292,13 @@ Complete reference for Neovim keybindings from Kickstart.nvim configuration.
 
 ---
 
-## Configuration Details
+## Quick Reference
 
-- **Base**: Kickstart.nvim (single-file architecture)
-- **Theme**: Tokyo Night (`tokyonight-night` variant)
-- **LSPs**: Terraform (`terraform`), Lua (`lua_ls`) via Mason
-- **Completion**: blink.cmp (faster alternative to nvim-cmp)
-- **Formatter**: conform.nvim (stylua for Lua)
-- **Plugin Manager**: lazy.nvim
-- **File Explorer**: neo-tree
-- **Fuzzy Finder**: Telescope with fzf-native
-- **Git Integration**: gitsigns
-- **AI**: GitHub Copilot
-
----
-
-## Custom Configuration
-
-Custom plugins and settings can be added to:
-- `lua/custom/plugins/*.lua` (modular plugin definitions)
-- Or directly in `init.lua` (single-file approach)
-
----
-
-## Learning Resources
-
-- `:Tutor` - Interactive Neovim tutorial
-- `:help` - Built-in help system
-- `<leader>sh` - Search help documentation (Telescope)
+**Learning**:
+- `:Tutor` - Interactive tutorial
+- `<leader>sh` - Search help (Telescope)
 - `<leader>sk` - Search keymaps (Telescope)
-- `:help lua-guide` - Lua configuration guide
-- `:help lsp` - LSP documentation
-- `:help telescope.builtin` - Telescope commands
+- `:help lsp` / `:help lua-guide` / `:help telescope.builtin`
+
+**Customization**:
+- Add plugins: `lua/custom/plugins/*.lua` or directly in `init.lua`

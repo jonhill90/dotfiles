@@ -1,261 +1,187 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+AI assistant guidance for working with this dotfiles repository.
 
-## Repository Purpose
+## Overview
 
-This is a **dotfiles repository** for macOS development environment management using GNU Stow. It tracks configuration files for shell (zsh), editor (Neovim), terminal multiplexer (tmux), window manager (AeroSpace), and package management (Homebrew).
+**macOS dotfiles repository** managed with GNU Stow. Tracks configs for: zsh, Neovim, tmux, AeroSpace, Ghostty, and Homebrew.
 
-## Project Context
+## Critical Constraints
 
-This repository is managed as part of a larger personal knowledge management system in Obsidian. To understand the full context, decisions, and lessons learned, read these notes:
+**MUST READ BEFORE CHANGES:**
+1. **Target location**: Repository lives at `~/.dotfiles`, always use `stow --target="$HOME"`
+2. **Not all configs use `~/.config/`**: AeroSpace uses `~/.aerospace.toml` (home directory)
+3. **External dependencies required**: Oh My Zsh, TPM (Tmux Plugin Manager), Homebrew (see Architecture)
+4. **Machine-specific overrides**: Never commit `.gitconfig.local`, `.zshrc.local`, `.tmux.conf.local`
+5. **Obsidian context exists**: Use `mcp__basic-memory__read_note` to read project/research notes before making assumptions
 
-**Project Notes** (read these for comprehensive project context):
-- `03-projects/03b-personal/project-personal-dot-files` - Main dotfiles project with scope, tasks, timeline
-- `03-projects/03b-personal/project-personal-aerospace-configuration` - AeroSpace window manager setup
-- `03-projects/03b-personal/project-personal-tmux-configuration` - tmux terminal multiplexer with gpakosz
-- `03-projects/03b-personal/project-personal-neovim-configuration` - Neovim editor configuration
-- `03-projects/03b-personal/project-personal-gnu-stow` - GNU Stow package management patterns
+## Obsidian Knowledge Base
 
-**Research Notes** (read these for technical deep-dives):
-- `01-notes/01r-research/202510312014` - GNU Stow Hands-On Learning Session (2025-10-31)
-- `01-notes/01r-research/202510300130` - Current configuration audit (2025-10-30)
-- `01-notes/01r-research/202510292345` - Dotfiles: DRY Principle for Dev Environments
-- `01-notes/01r-research/202510292343` - GNU Stow: Symlink Farm Manager
-- `01-notes/01r-research/202510292342` - tmux: Terminal Multiplexer Mastery
-- `01-notes/01r-research/202510292341` - Neovim: Kickstart Philosophy & blink.cmp
-- `01-notes/01r-research/202510292348` - Terminal Workflow Setup
+**Before making changes, read relevant notes to understand context and decisions:**
 
-**Important**: Use the `mcp__basic-memory__read_note` tool to read these notes when you need context about why decisions were made, what was tried before, or what's planned next. Do not assume - read the actual notes.
+**Primary Project Notes:**
+- `03-projects/03b-personal/project-personal-dot-files` - Main project scope, tasks, timeline
+- `03-projects/03b-personal/project-personal-[tool]-configuration` - Tool-specific projects (aerospace, tmux, neovim)
+- `03-projects/03b-personal/project-personal-gnu-stow` - Stow patterns and best practices
 
-## Repository Architecture
+**Research Notes (for technical deep-dives):**
+- `01-notes/01r-research/202510312014` - GNU Stow hands-on session (2025-10-31)
+- `01-notes/01r-research/202510300130` - Current config audit (2025-10-30)
+- `01-notes/01r-research/20251029234[1-8]` - Tool-specific research (Neovim, tmux, Stow, etc.)
+
+**When to read these:**
+- Before proposing architecture changes
+- When debugging why something is configured a certain way
+- Before suggesting alternatives to current tools
+- When planning new features or packages
+
+## Architecture
 
 ### GNU Stow Pattern
-Each top-level directory represents a "package" that mirrors the target home directory structure:
-
 ```
 package_name/.target/path/config_file
 ```
+Each directory is a "package" mirroring home directory structure.
+- `zsh/.zshrc` → `~/.zshrc`
+- `nvim/.config/nvim/init.lua` → `~/.config/nvim/init.lua`
+- `aerospace/.aerospace.toml` → `~/.aerospace.toml` (NOT `.config/`)
 
-Example: `zsh/.zshrc` stows to `~/.zshrc`
-Example: `nvim/.config/nvim/init.lua` stows to `~/.config/nvim/init.lua`
+### External Dependencies (Required)
+Must be installed separately:
+- **Homebrew** - Package manager (installs all tools via Brewfile)
+- **Oh My Zsh** - Shell framework (manual install)
+- **TPM** - Tmux Plugin Manager (clone to `~/.tmux/plugins/tpm`)
 
-### Key Packages
-- **aerospace** - AeroSpace window manager config at `~/.aerospace.toml` (NOT in `.config/`)
-- **git** - Minimal Git config (uses `.gitconfig.local` pattern for machine-specific settings)
-- **ghostty** - GPU-accelerated terminal emulator with transparency and blur
-- **nvim** - Kickstart.nvim base with Tokyo Night theme, Terraform & Lua LSPs
-- **tmux** - Relies on external gpakosz framework + custom `.tmux.conf.local`
-- **zsh** - Oh My Zsh + Powerlevel10k (89KB `.p10k.zsh` customization)
+### Machine-Specific Overrides (Gitignored)
+- `~/.gitconfig.local` - Email, name
+- `~/.zshrc.local` - Shell customizations
+- `~/.tmux.conf.local` - tmux overrides (optional)
 
-**Important:** Not all configs follow the `~/.config/` pattern. Check actual file locations before creating package structures.
+## Packages
 
-### External Dependencies
-This repo has mandatory external dependencies that must be installed separately:
-- **Oh My Zsh** - Shell framework (manual install required)
-- **gpakosz/.tmux** - tmux framework (`~/.tmux-gpakosz/` must be cloned)
-- **Homebrew** - Package manager (all tools installed via Brewfile)
+### Neovim (nvim)
+- **Base**: Kickstart.nvim (single-file `init.lua`)
+- **Theme**: Tokyo Night (`tokyonight-night`)
+- **LSPs**: Terraform, Lua (via Mason)
+- **Plugins**: lazy.nvim (`lazy-lock.json` gitignored)
+- **Leader**: Space
+- **Custom dirs**: `lua/custom/plugins/`, `lua/kickstart/plugins/`
+- **Keybinds**: Standard HJKL, Space leader (see `docs/nvim-shortcuts.md`)
 
-## Documentation Structure
+### AeroSpace (aerospace)
+- **Config**: `~/.aerospace.toml` (NOT in `.config/`)
+- **App launchers**: `Shift-Ctrl-Alt-Cmd` + letter (A=Ghostty, B=Arc, C=Claude, D=Discord, etc.)
+- **Workspaces**: 1-5 main monitor, 6-10 secondary monitor
+- **Floating**: Finder, Bitwarden, Teams, Outlook
+- **Service mode**: `Alt+Shift+;` for reload/reset
+- **Keybinds**: `Alt+HJKL` (focus), `Alt+Shift+HJKL` (move)
 
-- **README.md** - Quick start guide and overview
-- **CLAUDE.md** - This file, context for AI assistants
-- **docs/** - Detailed documentation
-  - **tmux-shortcuts.md** - Complete tmux keybindings (Essential → Common → Advanced)
-  - **nvim-shortcuts.md** - Complete Neovim keybindings (Essential → Common → Advanced)
+### tmux (tmux)
+- **Config**: Minimal custom (115 lines) at `~/.tmux.conf`
+- **Theme**: Tokyo Night with transparency
+- **Prefix**: `Ctrl+b` (default) or `Ctrl+a` (secondary)
+- **Vi-mode**: Enabled for copy mode
+- **Custom binds**: `|` vertical split, `-` horizontal split, `r` reload, `e` edit config
+- **Plugins** (TPM): vim-tmux-navigator, tmux-yank, tmux-resurrect, tmux-continuum, tmux-fzf-url, tmux-sessionx
+- **Key features**: Dual prefix, mouse support, status bar on top, seamless nvim integration
+- **Keybinds**: `Ctrl+HJKL` navigation (see `docs/tmux-shortcuts.md`)
 
-## Common Commands
+### Ghostty (ghostty)
+- **Config**: `~/.config/ghostty/config` (XDG standard)
+- **Font**: FiraCode Nerd Font 16pt (thicken enabled)
+- **Appearance**: 0.9 opacity with blur, Display-P3 color space
+- **Theme**: iTerm2 Default
+- **Custom**: macOS dock icon, hidden tab bar (using tmux), `super+t=ignore`
 
-### Installing Dotfiles on New Machine
+### Zsh (zsh)
+- **Files**: `.zshrc` (127 lines) + `.p10k.zsh` (89KB Powerlevel10k)
+- **Framework**: Oh My Zsh (minimal plugins: git only)
+- **Theme**: Powerlevel10k
+- **FZF**: Integrated with `ag` (silver searcher)
+- **Aliases**: `inv` (nvim+fzf+bat), `vi` (nvim)
 
-**Automated (Recommended):**
+### Git (git)
+- Minimal base config
+- Machine-specific in `~/.gitconfig.local` (gitignored)
+
+## Workflows
+
+### Initial Setup (New Machine)
 ```bash
+# Clone and run installer
 git clone https://github.com/jonhill90/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 ./install.sh
 
-# Install Oh-my-tmux framework (not in install.sh yet)
-git clone https://github.com/gpakosz/.tmux.git ~/.tmux-gpakosz
-ln -s -f ~/.tmux-gpakosz/.tmux.conf ~/.tmux.conf
+# Install TPM (Tmux Plugin Manager)
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+# Reload and install tmux plugins
 exec zsh
+tmux
+# Press: prefix + I (to install plugins)
+# Press: Alt+Shift+; then Escape (reload AeroSpace)
 ```
 
-**Manual (if needed):**
+### Daily Operations
+
+**Edit configs** - Changes reflect immediately via symlinks:
 ```bash
-# 1. Clone repo
-git clone https://github.com/jonhill90/dotfiles.git ~/.dotfiles && cd ~/.dotfiles
-
-# 2. Install all Homebrew packages
-brew bundle install
-
-# 3. Symlink configs
-stow --target="$HOME" aerospace git ghostty nvim tmux zsh
-
-# 4. Install Oh-my-tmux framework
-git clone https://github.com/gpakosz/.tmux.git ~/.tmux-gpakosz
-ln -s -f ~/.tmux-gpakosz/.tmux.conf ~/.tmux.conf
-
-# 5. Restart shell
-exec zsh
+cd ~/.dotfiles/package/
+nvim .config/package/config  # Edit directly in repo
 ```
 
-**Note:** This repository should be cloned to `~/.dotfiles` as shown above. The `--target="$HOME"` flag ensures symlinks are created correctly.
+**Add new package:**
+```bash
+mkdir -p newapp/.config/newapp
+cp ~/.config/newapp/config newapp/.config/newapp/
+stow --target="$HOME" newapp
+```
 
-### Managing Configurations
-
-**Update Brewfile after installing new packages:**
+**Update Brewfile after installing packages:**
 ```bash
 brew bundle dump --describe --force
-git add Brewfile
-git commit -m "Update Brewfile"
 ```
 
-**Add new configuration:**
+**Stow operations:**
 ```bash
-# 1. Create Stow package structure
-mkdir -p newapp/.config/newapp
-
-# 2. Copy config
-cp ~/.config/newapp/config newapp/.config/newapp/
-
-# 3. Stow it with explicit target
-stow --target="$HOME" newapp
-
-# 4. Verify
-ls -la ~/.config/newapp  # Should show symlink with 'l' and '->'
+stow --target="$HOME" package      # Create symlinks
+stow -D --target="$HOME" package   # Remove symlinks
+stow -R --target="$HOME" package   # Recreate symlinks
 ```
 
-**Example: Ghostty terminal emulator**
-```bash
-# Created structure: ghostty/.config/ghostty/config
-# Stowed with: stow --target="$HOME" ghostty
-# Result: ~/.config/ghostty -> ~/.dotfiles/ghostty/.config/ghostty
-```
+### Testing/Reloading
 
-**Remove symlinks:**
-```bash
-stow -D --target="$HOME" package_name  # Unstow (remove symlinks)
-```
+- **AeroSpace**: `Alt+Shift+;` then `Escape` (or `brew services restart aerospace`)
+- **tmux**: `prefix r` (shows checkmark on status bar) or `tmux source-file ~/.tmux.conf`
+- **Neovim**: `:checkhealth`
+- **Zsh**: `exec zsh`
+- **tmux plugins**: `prefix I` (install), `prefix U` (update)
 
-**Reinstall symlinks:**
-```bash
-stow -R --target="$HOME" package_name  # Restow (remove + recreate symlinks)
-```
+### Troubleshooting
 
-### Testing Changes
-```bash
-# Test AeroSpace config reload
-# In macOS: Alt+Shift+; then Escape
+- **Symlink conflicts**: Backup first (`mv ~/.zshrc ~/.zshrc.backup`), then restow
+- **Neovim plugins broken**: `:checkhealth` then `:Lazy restore`
+- **tmux config not applying**: `prefix r` or `tmux kill-server` then restart
+- **tmux plugins not loading**: `prefix I` to install, check `~/.tmux/plugins/tpm` exists
+- **Verify symlink**: `ls -la ~/.config/app` (should show `l` and `->`)
 
-# Test tmux config
-tmux source-file ~/.tmux.conf
+## Current State
 
-# Test Neovim health
-nvim -c :checkhealth
-```
-
-## Configuration Details
-
-### Keybind Patterns
-Current Vi-motion consistency across tools:
-- **AeroSpace**: `Alt+HJKL` (window focus), `Alt+Shift+HJKL` (move windows)
-- **tmux**: `Ctrl+HJKL` (pane navigation via vim-tmux-navigator)
-- **Neovim**: Native `HJKL`, `Space` leader key
-
-### Machine-Specific Overrides
-Uses `.local` pattern for machine-specific settings (gitignored):
-- `~/.gitconfig.local` - Email, name
-- `~/.zshrc.local` - Machine-specific shell config
-- `~/.tmux.conf.local.override` - Additional tmux overrides
-
-## Package-Specific Details
-
-### Neovim (nvim package)
-- **Base**: Kickstart.nvim - single-file `init.lua` architecture
-- **Theme**: Tokyo Night (`tokyonight-night` variant)
-- **LSPs**: Terraform and Lua configured (via Mason)
-- **Plugins**: Managed by lazy.nvim, `lazy-lock.json` is gitignored
-- **Leader**: Space key
-- **Custom dirs**: `lua/custom/plugins/` for user additions, `lua/kickstart/plugins/` from template
-
-### AeroSpace (aerospace package)
-- **App launchers**: `Shift-Ctrl-Alt-Cmd-Shift` + letter bindings (A=Ghostty, B=Arc, C=Claude, D=Discord, M=Music, N=Obsidian, O=Outlook, P=Bitwarden, T=Teams)
-- **Workspaces**: 1-5 assigned to main monitor, 6-10 assigned to secondary monitor
-- **Floating windows**: Finder, Bitwarden, Teams, Outlook configured to float
-- **Service mode**: `Alt+Shift+;` for config reload/reset operations
-
-### Ghostty (ghostty package)
-- **Config location**: `~/.config/ghostty/config` (follows XDG standard)
-- **Font**: FiraCode Nerd Font at 16pt with font-thicken enabled
-- **Appearance**: Background opacity 0.9 with blur, Display-P3 color space
-- **Theme**: iTerm2 Default
-- **Customizations**: Custom macOS dock icon, hidden tab bar (using tmux instead)
-- **Keybind overrides**: `super+t=ignore` (disabled new tab, using tmux)
-
-### tmux (tmux package)
-- **Framework dependency**: Requires gpakosz repo at `~/.tmux-gpakosz/`
-- **Config split**: Base is `~/.tmux.conf` (symlink to framework), customizations in `.tmux.conf.local`
-- **Vi-mode**: Enabled
-- **Custom binds**: `|` horizontal split, `-` vertical split
-- **Plugin**: vim-tmux-navigator for seamless vim/tmux navigation
-
-### Zsh (zsh package)
-- **Files**: `.zshrc` (127 lines) + `.p10k.zsh` (89KB Powerlevel10k customization)
-- **Framework**: Oh My Zsh with minimal plugins (only `git`)
-- **Theme**: Powerlevel10k
-- **FZF**: Integrated with `ag` (silver searcher) as default command
-- **Aliases**: `inv` (nvim with fzf+bat picker), `vi` (nvim)
-
-### Git (git package)
-- Minimal base configuration
-- Machine-specific settings (email, name) go in `~/.gitconfig.local` (gitignored)
-
-## Current State vs Roadmap
-
-**Currently Implemented:**
-- Powerlevel10k theme (shell)
-- Tokyo Night theme (Neovim)
-- Ghostty terminal emulator (GPU-accelerated with transparency)
-- gpakosz tmux framework
+**Implemented:**
+- Powerlevel10k + Tokyo Night theme (shell + Neovim + tmux)
+- Ghostty terminal with GPU acceleration + transparency
+- Custom minimal tmux config (115 lines) + TPM plugins
 - Terraform & Lua LSPs only
+- Modern CLI tools: zoxide, atuin, carapace, fzf
 
-**In Roadmap** (planned but not implemented):
-- Starship prompt (alternative to Powerlevel10k)
-- Catppuccin theme (alternative theme option)
-- WezTerm terminal emulator (alternative to Ghostty)
-- Additional LSPs (Python, JSON, YAML, Shell, Kubernetes)
-- Shell vi-mode
-- bootstrap.sh improvements
+**Roadmap** (not yet implemented):
+- Starship prompt, Catppuccin theme, WezTerm
+- Additional LSPs (Python, JSON, YAML, Shell, K8s)
+- Shell vi-mode, bootstrap improvements
 
-## Troubleshooting Patterns
+## Documentation
 
-**Symlink conflicts**: Backup existing files before stowing
-```bash
-mv ~/.zshrc ~/.zshrc.backup
-stow zsh
-```
-
-**AeroSpace config not loading**:
-- Reload: `Alt+Shift+;` then `Escape`
-- Or: `brew services restart aerospace`
-
-**Neovim plugins broken**: `:checkhealth` then `:Lazy restore`
-
-**tmux config not applying**: `tmux source-file ~/.tmux.conf` or `tmux kill-server`
-
-## Development Workflow
-
-When making changes to configs:
-1. Edit files in `~/.dotfiles/package/` directory
-2. Changes reflect immediately via symlinks
-3. Test the config (see Testing Changes section)
-4. Commit and push to repo
-
-When adding new tools:
-1. Install via Homebrew
-2. Update Brewfile: `brew bundle dump --describe --force`
-3. Create Stow package structure matching `~/.config/` or `~/` layout
-4. Copy config files
-5. Stow the package
-6. Document in README.md if significant
+- **README.md** - Quick start and overview
+- **docs/nvim-shortcuts.md** - Neovim keybindings reference
+- **docs/tmux-shortcuts.md** - tmux keybindings reference
