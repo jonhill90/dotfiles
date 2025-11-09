@@ -117,6 +117,27 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias inv='nvim $(fzf -m --preview="bat —-color=always {}")'
 alias vi='nvim'
+
+# FZF-powered directory operations
+cpd() {
+  local src dest
+  echo "📁 Select source folder..."
+  src=$(fd -t d -H -E .git | fzf --prompt="Source: " --preview="tree -L 2 -C {}" --height=80%)
+  [ -z "$src" ] && echo "❌ Cancelled" && return 1
+
+  echo "📂 Select destination folder..."
+  dest=$(fd -t d -H -E .git | fzf --prompt="Destination: " --preview="tree -L 2 -C {}" --height=80%)
+  [ -z "$dest" ] && echo "❌ Cancelled" && return 1
+
+  echo "\n📋 Copy: $src → $dest/$(basename $src)"
+  read "?Proceed? [y/N] " confirm
+  if [[ $confirm =~ ^[Yy]$ ]]; then
+    cp -rv "$src" "$dest/" && echo "✅ Done!"
+  else
+    echo "❌ Cancelled"
+  fi
+}
+
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
