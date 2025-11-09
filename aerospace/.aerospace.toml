@@ -98,12 +98,18 @@ run = 'layout floating'
     # All possible commands: https://nikitabobko.github.io/AeroSpace/commands
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
-    # You can uncomment the following lines to open up terminal with alt + enter shortcut
-    # (like in i3)
+    # Alt+Enter: Launch Ghostty or spawn new window (iTerm-style behavior)
     alt-enter = '''exec-and-forget osascript -e '
-    tell application "System Events" to tell process "Ghostty"
-        click menu item "New Window" of menu "File" of menu bar 1
-    end tell'
+    tell application "System Events"
+        set isRunning to (name of processes) contains "Ghostty"
+    end tell
+    tell application "Ghostty" to activate
+    if isRunning then
+        delay 0.1
+        tell application "System Events" to tell process "Ghostty"
+            click menu item "New Window" of menu "File" of menu bar 1
+        end tell
+    end if'
     '''
 
     # Terminal
