@@ -222,3 +222,7 @@ run = 'layout floating'
     down = 'volume down'
     up = 'volume up'
     shift-down = ['volume set 0', 'mode main']
+
+    left = 'exec-and-forget nowplaying-cli previous'  # Previous track
+    right = 'exec-and-forget nowplaying-cli next'     # Next track
+    space = 'exec-and-forget nowplaying-cli togglePlayPause' # Play/Pause

@@ -55,6 +55,8 @@ brew "k9s"
 brew "kubernetes-cli"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
+# Retrieves currently playing media, and simulates media actions
+brew "nowplaying-cli"
 # Create, run, and share large language models (LLMs)
 brew "ollama", restart_service: :changed
 # Execute binaries from Python packages in isolated environments
@@ -122,8 +124,6 @@ cask "kitty"
 cask "maccy"
 # Command-line shell and scripting language
 cask "powershell"
-# Open-source code editor
-cask "visual-studio-code"
 # GPU-accelerated cross-platform terminal emulator and multiplexer
 cask "wezterm"
 vscode "anthropic.claude-code"
@@ -138,6 +138,7 @@ vscode "mechatroner.rainbow-csv"
 vscode "mermaidchart.vscode-mermaid-chart"
 vscode "ms-azuretools.vscode-containers"
 vscode "ms-azuretools.vscode-docker"
+vscode "ms-kubernetes-tools.vscode-kubernetes-tools"
 vscode "ms-mssql.data-workspace-vscode"
 vscode "ms-mssql.mssql"
 vscode "ms-mssql.sql-bindings-vscode"
@@ -160,8 +161,9 @@ vscode "ms-vscode.makefile-tools"
 vscode "ms-vscode.powershell"
 vscode "ms-vscode.remote-explorer"
 vscode "openai.chatgpt"
-vscode "parallelsdesktop.parallels-desktop"
+vscode "pkief.material-icon-theme"
 vscode "redhat.vscode-yaml"
 vscode "shd101wyy.markdown-preview-enhanced"
 vscode "tamasfe.even-better-toml"
 vscode "tomoki1207.pdf"
+vscode "wayou.vscode-todo-highlight"
