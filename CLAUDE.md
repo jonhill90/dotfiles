@@ -4,7 +4,7 @@ AI assistant guidance for working with this dotfiles repository.
 
 ## Overview
 
-**macOS dotfiles repository** managed with GNU Stow. Tracks configs for: zsh, Neovim, tmux, AeroSpace, Ghostty, and Homebrew.
+**macOS dotfiles repository** managed with GNU Stow. Tracks configs for: zsh, Neovim, tmux, AeroSpace, Ghostty, VSCode, and Homebrew.
 
 ## Critical Constraints
 
@@ -60,13 +60,16 @@ Must be installed separately:
 ## Packages
 
 ### Neovim (nvim)
-- **Base**: Kickstart.nvim (single-file `init.lua`)
+- **Base**: LazyVim (curated Neovim distribution)
 - **Theme**: Tokyo Night (`tokyonight-night`)
 - **LSPs**: Terraform, Lua (via Mason)
-- **Plugins**: lazy.nvim (`lazy-lock.json` gitignored)
+- **Plugins**: lazy.nvim manager (`lazy-lock.json` gitignored)
 - **Leader**: Space
-- **Custom dirs**: `lua/custom/plugins/`, `lua/kickstart/plugins/`
-- **Keybinds**: Standard HJKL, Space leader (see `docs/nvim-shortcuts.md`)
+- **VSCode Integration**: Conditional loading via `vim.g.vscode` flag
+  - Terminal: Full LazyVim (`config.lazy`)
+  - VSCode: Minimal config with VSCode actions (`config.vscode`)
+- **Custom dirs**: `lua/config/`, `lua/plugins/`
+- **Keybinds**: Standard HJKL, Space leader (see `docs/nvim-shortcuts.md`, `docs/vscode-shortcuts.md`)
 
 ### AeroSpace (aerospace)
 - **Config**: `~/.aerospace.toml` (NOT in `.config/`)
@@ -99,6 +102,17 @@ Must be installed separately:
 - **Theme**: Powerlevel10k
 - **FZF**: Integrated with `ag` (silver searcher)
 - **Aliases**: `inv` (nvim+fzf+bat), `vi` (nvim)
+
+### VSCode (vscode)
+- **Config**: `~/.dotfiles/vscode/` (simple structure, not stow-based)
+- **Extension**: vscode-neovim (embeds actual Neovim instance)
+- **Font**: FiraCode Nerd Font with ligatures (matches terminal setup)
+- **Symlinking**: OS-specific in install.sh
+  - macOS: `~/Library/Application Support/Code/User/`
+  - Linux: `~/.config/Code/User/`
+- **Keybinds**: LazyVim-inspired semantic mappings (see `docs/vscode-shortcuts.md`)
+- **Integration**: Conditional Neovim config loads `lua/config/vscode.lua` when in VSCode
+- **Philosophy**: VSCode for debugging/GUI tasks, terminal Neovim for K8s/DevOps/SSH
 
 ### Git (git)
 - Minimal base config
@@ -169,7 +183,9 @@ stow -R --target="$HOME" package   # Recreate symlinks
 ## Current State
 
 **Implemented:**
-- Powerlevel10k + Tokyo Night theme (shell + Neovim + tmux)
+- LazyVim with Tokyo Night theme (terminal + VSCode integration)
+- VSCode with vscode-neovim (semantic keybindings matching LazyVim)
+- Powerlevel10k + Tokyo Night theme (shell + Neovim + tmux + VSCode)
 - Ghostty terminal with GPU acceleration + transparency
 - Custom minimal tmux config (115 lines) + TPM plugins
 - Terraform & Lua LSPs only
@@ -183,5 +199,6 @@ stow -R --target="$HOME" package   # Recreate symlinks
 ## Documentation
 
 - **README.md** - Quick start and overview
-- **docs/nvim-shortcuts.md** - Neovim keybindings reference
+- **docs/nvim-shortcuts.md** - Neovim keybindings reference (LazyVim)
+- **docs/vscode-shortcuts.md** - VSCode + vscode-neovim keybindings reference
 - **docs/tmux-shortcuts.md** - tmux keybindings reference

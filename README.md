@@ -9,7 +9,7 @@ macOS development environment with GNU Stow. Quick setup for shell, editor, wind
 ## Stack
 
 - **Shell**: zsh + Oh My Zsh + Powerlevel10k + modern CLI tools (zoxide, atuin, carapace, fzf)
-- **Editor**: Neovim (Kickstart.nvim + Tokyo Night + Terraform/Lua LSPs)
+- **Editor**: Neovim (LazyVim + Tokyo Night + Terraform/Lua LSPs) + VSCode (vscode-neovim integration)
 - **Multiplexer**: tmux (minimal custom config + TPM plugins + Tokyo Night theme)
 - **Terminal**: Ghostty (GPU-accelerated with transparency)
 - **Window Manager**: AeroSpace (tiling for macOS)
@@ -64,10 +64,15 @@ aerospace/.aerospace.toml   → ~/.aerospace.toml (NOT .config/)
 ├── zsh/.zshrc, .p10k.zsh   # Shell + theme (127 + 89KB)
 ├── tmux/.tmux.conf         # Custom tmux (115 lines + TPM plugins)
 ├── aerospace/.aerospace.toml  # Window manager
-├── nvim/.config/nvim/      # Editor (Kickstart + plugins)
+├── nvim/.config/nvim/      # Editor (LazyVim + plugins)
+│   ├── lua/config/vscode.lua  # VSCode-specific Neovim config
+│   └── init.lua            # Conditional loading (terminal vs VSCode)
+├── vscode/                 # VSCode settings (OS-specific symlinks)
+│   ├── settings.json
+│   └── keybindings.json
 ├── ghostty/.config/ghostty/config  # Terminal
 ├── Brewfile                # Package manifest
-└── install.sh              # Automated setup
+└── install.sh              # Automated setup (includes VSCode symlinks)
 ```
 
 ## Keybinds
@@ -75,11 +80,13 @@ aerospace/.aerospace.toml   → ~/.aerospace.toml (NOT .config/)
 **Vi motions everywhere:**
 - **AeroSpace**: `Alt+HJKL` (focus), `Alt+Shift+HJKL` (move)
 - **tmux**: `Ctrl+HJKL` (navigate panes/nvim via vim-tmux-navigator)
-- **Neovim**: Native `HJKL`, `Space` leader
+- **Neovim**: Native `HJKL`, `Space` leader (LazyVim)
+- **VSCode**: All vim motions + `Ctrl+HJKL` (navigate editor/explorer/terminal)
 
 **See detailed shortcuts:**
+- [Neovim keybindings](docs/nvim-shortcuts.md) - LazyVim shortcuts (terminal)
+- [VSCode keybindings](docs/vscode-shortcuts.md) - vscode-neovim shortcuts
 - [tmux keybindings](docs/tmux-shortcuts.md) - Essential → Advanced
-- [Neovim keybindings](docs/nvim-shortcuts.md) - Essential → Advanced
 
 ## Highlights
 
@@ -97,11 +104,18 @@ aerospace/.aerospace.toml   → ~/.aerospace.toml (NOT .config/)
 - `prefix |` - Vertical (left/right)
 - `prefix r` - Reload config
 
-**Neovim:**
+**Neovim** (terminal):
 - `<leader>sf` - Find files (Telescope)
 - `<leader>sg` - Live grep
 - `grd` - Go to definition
 - `K` - Hover docs
+
+**VSCode** (vscode-neovim):
+- `<leader>ff` - Find files (Quick Open)
+- `<leader>/` - Search in files
+- `Ctrl+/` - Toggle terminal
+- `<leader>ca` - Code actions
+- All vim motions work (`ciw`, `dd`, `gg`, etc.)
 
 ## Usage
 

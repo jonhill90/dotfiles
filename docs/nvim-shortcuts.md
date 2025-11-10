@@ -1,10 +1,13 @@
 # Neovim Shortcuts
 
-**Config**: Kickstart.nvim · Tokyo Night theme · Terraform & Lua LSPs (Mason)
+**Config**: LazyVim · Tokyo Night theme · Terraform & Lua LSPs (Mason)
 **Leader**: `Space`
-**Plugins**: lazy.nvim, Telescope, Treesitter, blink.cmp, neo-tree, gitsigns, conform.nvim, GitHub Copilot
+**Framework**: LazyVim distribution with curated plugins and sensible defaults
+**Plugins**: lazy.nvim (manager), Telescope, Treesitter, nvim-cmp, neo-tree, gitsigns, conform.nvim, and more
 
 **Seamless navigation**: `Ctrl+h/j/k/l` works across Neovim ↔ tmux panes (vim-tmux-navigator)
+
+**Note**: When running in VSCode via vscode-neovim, a minimal config loads instead. See `docs/vscode-shortcuts.md` for VSCode keybindings.
 
 ---
 

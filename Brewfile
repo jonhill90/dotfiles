@@ -122,9 +122,12 @@ cask "kitty"
 cask "maccy"
 # Command-line shell and scripting language
 cask "powershell"
+# Open-source code editor
+cask "visual-studio-code"
 # GPU-accelerated cross-platform terminal emulator and multiplexer
 cask "wezterm"
 vscode "anthropic.claude-code"
+vscode "asvetliakov.vscode-neovim"
 vscode "docker.docker"
 vscode "donjayamanne.kusto"
 vscode "github.copilot"
