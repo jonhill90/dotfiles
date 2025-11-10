@@ -76,6 +76,11 @@
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },
+
+  // vscode-neovim settings
+  "vscode-neovim.neovimInitVimPaths.darwin": "~/.config/nvim/init.lua",
+  "vscode-neovim.neovimInitVimPaths.linux": "~/.config/nvim/init.lua",
+
   "chat.mcp.gallery.enabled": true,
   "claudeCode.useTerminal": true,
 
