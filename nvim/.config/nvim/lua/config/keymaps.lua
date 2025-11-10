@@ -5,3 +5,6 @@
 -- Exit insert mode with jj or jk
 vim.api.nvim_set_keymap("i", "jj", "<Esc>", { noremap = false })
 vim.api.nvim_set_keymap("i", "jk", "<Esc>", { noremap = false })
+
+-- Exit terminal mode with Ctrl+e
+vim.api.nvim_set_keymap("t", "<C-e>", "<C-\\><C-n>", { noremap = true, silent = true })
