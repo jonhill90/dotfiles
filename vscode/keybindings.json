@@ -31,5 +31,10 @@
         "key": "ctrl+/",
         "command": "workbench.action.terminal.toggleTerminal",
         "when": "terminalFocus"
+    },
+    {
+        "key": "c",
+        "command": "filesExplorer.copy",
+        "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
     }
 ]

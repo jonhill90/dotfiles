@@ -40,6 +40,11 @@ keymap({ "n", "v" }, "<leader>fr", function()
   vscode.action("workbench.action.openRecent")
 end, opts)
 
+-- <leader>fn = New File
+keymap({ "n", "v" }, "<leader>fn", function()
+  vscode.action("workbench.action.files.newUntitledFile")
+end, opts)
+
 -- =====================================================================
 -- Search & Command Palette
 -- =====================================================================
@@ -77,6 +82,11 @@ end, opts)
 -- <leader>cr = Rename Symbol (LazyVim default)
 keymap({ "n", "v" }, "<leader>cr", function()
   vscode.action("editor.action.rename")
+end, opts)
+
+-- <leader>cf = Format Document (LazyVim default)
+keymap({ "n", "v" }, "<leader>cf", function()
+  vscode.action("editor.action.formatDocument")
 end, opts)
 
 -- K = Show hover (vim convention, LazyVim default)
@@ -166,6 +176,34 @@ end, opts)
 -- <leader>gg = Source Control View (matches LazyVim LazyGit)
 keymap({ "n", "v" }, "<leader>gg", function()
   vscode.action("workbench.view.scm")
+end, opts)
+
+-- =====================================================================
+-- AI Integration (Copilot Chat)
+-- =====================================================================
+-- <leader>aa = Open Copilot Chat
+keymap({ "n", "v" }, "<leader>aa", function()
+  vscode.action("workbench.action.chat.open")
+end, opts)
+
+-- <leader>ai = Inline Chat (quick fix/edit)
+keymap({ "n", "v" }, "<leader>ai", function()
+  vscode.action("inlineChat.start")
+end, opts)
+
+-- <leader>aq = Quick chat
+keymap({ "n", "v" }, "<leader>aq", function()
+  vscode.action("workbench.action.quickchat.toggle")
+end, opts)
+
+-- <leader>ac = Open Claude in terminal
+keymap({ "n", "v" }, "<leader>ac", function()
+  vscode.action("claude-vscode.terminal.open")
+end, opts)
+
+-- <leader>ao = Open ChatGPT sidebar
+keymap({ "n", "v" }, "<leader>ao", function()
+  vscode.action("chatgpt.openSidebar")
 end, opts)
 
 -- =====================================================================

@@ -38,6 +38,7 @@
 | `<leader>E` | Open Extensions view |
 | `<leader>ff` | Find files (Quick Open) |
 | `<leader>fr` | Recent files |
+| `<leader>fn` | New file |
 | `Ctrl+h/j/k/l` | Navigate left/down/up/right (works from any panel) |
 
 **Navigation notes**:
@@ -79,6 +80,7 @@
 |----------|-------------|
 | `<leader>ca` | Code Actions (Quick Fix) |
 | `<leader>cr` | Rename symbol |
+| `<leader>cf` | Format document |
 | `K` | Show hover documentation |
 | `gd` | Go to definition (vscode-neovim handles automatically) |
 | `gr` | Go to references (vscode-neovim handles automatically) |
@@ -100,6 +102,15 @@
 | Shortcut | Description |
 |----------|-------------|
 | `<leader>gg` | Open Source Control view |
+
+### AI Assistants
+| Shortcut | Description |
+|----------|-------------|
+| `<leader>aa` | Open Copilot Chat |
+| `<leader>ai` | Inline Chat (quick fix/edit) |
+| `<leader>aq` | Quick chat toggle |
+| `<leader>ac` | Open Claude terminal |
+| `<leader>ao` | Open ChatGPT sidebar |
 
 ---
 
@@ -139,6 +150,7 @@
 - `<leader>/` - Search in files (Telescope grep → Find in Files)
 - `<leader>ca` - Code actions
 - `<leader>cr` - Rename symbol
+- `<leader>cf` - Format document
 - `<leader>bd` - Close buffer
 - `Shift+h/l` - Navigate buffers/tabs
 - `K` - Hover documentation
@@ -181,6 +193,7 @@
 **File/Project**:
 - `<leader>ff` - Find file
 - `<leader>fr` - Recent files
+- `<leader>fn` - New file
 - `<leader>e` - Toggle sidebar
 - `Ctrl+h/l` - Switch between sidebar/editor
 
@@ -194,6 +207,7 @@
 - `gd` - Go to definition
 - `<leader>ca` - Code actions
 - `<leader>cr` - Rename
+- `<leader>cf` - Format document
 
 **Terminal**:
 - `Ctrl+/` - Toggle terminal
@@ -202,6 +216,12 @@
 **Tabs**:
 - `Shift+h/l` - Previous/next tab
 - `<leader>bd` - Close tab
+
+**AI**:
+- `<leader>aa` - Copilot Chat
+- `<leader>ai` - Inline chat
+- `<leader>ac` - Claude terminal
+- `<leader>ao` - ChatGPT sidebar
 
 **Learning**:
 - `<leader>sk` - Search keymaps (to see all available bindings)
