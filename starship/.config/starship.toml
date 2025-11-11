@@ -1,0 +1,97 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Single-line format matching P10k layout:
+# os_icon -> directory -> git_branch -> git_status -> prompt_char
+format = """
+$os$directory$git_branch$git_status$character"""
+
+# Continuation prompt (for multi-line commands)
+continuation_prompt = "[❯](bold green) "
+
+# Don't add extra newline before prompt
+add_newline = false
+
+# OS icon (enabled, shows Apple logo on macOS)
+[os]
+disabled = false
+format = "[$symbol]($style) "
+style = "bold white"
+
+[os.symbols]
+Macos = " "       # Apple logo (Nerd Font)
+Windows = " "     # Windows logo (Nerd Font)
+Arch = " "        # Arch logo
+Linux = " "       # Generic Linux penguin
+Ubuntu = " "      # Ubuntu logo
+Debian = " "      # Debian logo
+Fedora = " "      # Fedora logo
+Unknown = " "     # Question mark
+
+# Directory (cyan, truncated like P10k with shortened paths)
+[directory]
+style = "31"
+truncation_length = 4  # Keep last 4 dirs full
+truncate_to_repo = false
+format = "[$path]($style)"
+repo_root_style = "39"
+fish_style_pwd_dir_length = 1  # Shorten middle dirs to first letter
+truncation_symbol = ""
+use_os_path_sep = true
+home_symbol = "~"
+
+# Git branch with Nerd Font icon (matching P10k's U+F126)
+[git_branch]
+symbol = " "      # Git branch icon (matches P10k)
+format = " [$symbol$branch]($style)"
+style = "76"
+truncation_length = 20
+
+# Git status (show counts like P10k)
+[git_status]
+format = " [$all_status$ahead_behind]($style)"
+style = "31"  # Cyan/turquoise like P10k
+conflicted = "=${count}"
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+untracked = "?${count}"    # Show untracked count like P10k: ?1, ?2, etc
+stashed = "$${count}"
+modified = "!${count}"
+staged = "+${count}"
+renamed = "»${count}"
+deleted = "✘${count}"
+
+# Prompt character (❯ green/red, ❮ for vi mode)
+[character]
+success_symbol = " [❯](bold green)"     # ❯ green on success
+error_symbol = " [❯](bold red)"         # ❯ red on error
+vimcmd_symbol = " [❮](bold green)"      # ❮ green in vi command mode
+
+# Disable modules not in P10k left prompt
+# (These were on the right prompt in P10k)
+[username]
+disabled = true
+
+[hostname]
+disabled = true
+
+[cmd_duration]
+disabled = true
+
+[python]
+disabled = true
+
+[nodejs]
+disabled = true
+
+[rust]
+disabled = true
+
+[golang]
+disabled = true
+
+[package]
+disabled = true
+
+[time]
+disabled = true

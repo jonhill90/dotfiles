@@ -138,8 +138,11 @@ cpd() {
   fi
 }
 
-source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+# TEMPORARY: Testing Starship (commented out - restore P10k)
+# eval "$(starship init zsh)"
 
+# P10K (restored)
+source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 export PATH="$PATH:$(python3 -m site --user-base)/bin"
