@@ -6,6 +6,8 @@
 
 **Seamless navigation**: `Ctrl+h/j/k/l` works across editor/explorer/terminal/splits
 
+**New to vim?** See [vim-motions.md](vim-motions.md) for essential vim patterns like `ciw`, `ggVG`, registers, text objects, and more.
+
 ---
 
 ## Core Concepts
@@ -37,6 +39,8 @@
 | `<leader>e` | Toggle sidebar (Explorer/Source Control) |
 | `<leader>E` | Open Extensions view |
 | `<leader>ff` | Find files (Quick Open) |
+| `<leader>fb` | Find buffers (Open Editors) |
+| `<leader>,` | Switch buffer (quick buffer picker) |
 | `<leader>fr` | Recent files |
 | `<leader>fn` | New file |
 | `Ctrl+h/j/k/l` | Navigate left/down/up/right (works from any panel) |
@@ -69,13 +73,20 @@
 ### Explorer
 | Shortcut | Description |
 |----------|-------------|
-| `c` | Copy file/folder |
+| `a` | New file |
+| `Shift+A` | New folder |
+| `r` | Rename |
+| `d` | Delete |
+| `c` | Copy |
+| `x` | Cut |
+| `v` | Paste |
 | `t` | Open terminal at selected location |
 
 **Explorer notes**:
-- Focus explorer with `<leader>e`, then use `t` to open terminal at that folder
-- Works on files (opens at parent directory) or folders
-- Uses `Ctrl+h` to return to editor
+- Focus explorer with `<leader>e`, then use vim-like keys for file operations
+- When creating files with `a`, you can type paths with `/` to auto-create nested folders (e.g., `components/Button/index.tsx`)
+- `t` opens terminal at folder location (or parent directory if on a file)
+- Use `Ctrl+h` to return to editor
 
 ### Buffer/Tab Management
 | Shortcut | Description |
@@ -107,9 +118,18 @@
 |----------|-------------|
 | `<leader>ws` | Split editor down (horizontal) |
 | `<leader>wv` | Split editor right (vertical) |
+| `<leader>wH` | Move editor to left group |
+| `<leader>wJ` | Move editor to below group |
+| `<leader>wK` | Move editor to above group |
+| `<leader>wL` | Move editor to right group |
 | `<leader>wc` | Close current split |
 | `<leader>wo` | Close other editors |
 | `Ctrl+h/j/k/l` | Navigate between splits |
+
+**Window notes**:
+- Lowercase (`ws`, `wv`) = Create new split
+- Uppercase (`wH`, `wJ`, `wK`, `wL`) = Move current editor to group
+- Follows standard vim window management pattern
 
 ### Git/Source Control
 | Shortcut | Description |
@@ -160,6 +180,8 @@
 **Identical semantics**:
 - `<leader>e` - File explorer (neo-tree → VSCode sidebar)
 - `<leader>ff` - Find files (Telescope → Quick Open)
+- `<leader>fb` - Find buffers (Telescope → Open Editors)
+- `<leader>,` - Switch buffer (Telescope → Open Editors)
 - `<leader>/` - Search in files (Telescope grep → Find in Files)
 - `<leader>ca` - Code actions
 - `<leader>cr` - Rename symbol
@@ -205,6 +227,8 @@
 
 **File/Project**:
 - `<leader>ff` - Find file
+- `<leader>fb` - Find buffers (open editors)
+- `<leader>,` - Quick buffer switch
 - `<leader>fr` - Recent files
 - `<leader>fn` - New file
 - `<leader>e` - Toggle sidebar
@@ -228,7 +252,9 @@
 - `<leader>tn` - New terminal
 
 **Explorer**:
-- `c` - Copy file/folder
+- `a` - New file, `Shift+A` - New folder
+- `r` - Rename, `d` - Delete
+- `c` - Copy, `x` - Cut, `v` - Paste
 - `t` - Open terminal at location
 
 **Tabs**:

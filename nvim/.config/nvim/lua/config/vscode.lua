@@ -45,6 +45,16 @@ keymap({ "n", "v" }, "<leader>fn", function()
   vscode.action("workbench.action.files.newUntitledFile")
 end, opts)
 
+-- <leader>fb = Find Buffers / Open Editors (matches LazyVim Telescope buffers)
+keymap({ "n", "v" }, "<leader>fb", function()
+  vscode.action("workbench.action.showAllEditors")
+end, opts)
+
+-- <leader>, = Switch Buffer (matches LazyVim quick buffer switch)
+keymap({ "n", "v" }, "<leader>,", function()
+  vscode.action("workbench.action.showAllEditors")
+end, opts)
+
 -- =====================================================================
 -- Search & Command Palette
 -- =====================================================================
@@ -141,6 +151,27 @@ end, opts)
 -- <leader>wv = Split vertical
 keymap({ "n", "v" }, "<leader>wv", function()
   vscode.action("workbench.action.splitEditorRight")
+end, opts)
+
+-- Move editor between split groups (uppercase HJKL)
+-- <leader>wH = Move editor to left group
+keymap({ "n", "v" }, "<leader>wH", function()
+  vscode.action("workbench.action.moveEditorToLeftGroup")
+end, opts)
+
+-- <leader>wJ = Move editor to below group
+keymap({ "n", "v" }, "<leader>wJ", function()
+  vscode.action("workbench.action.moveEditorToBelowGroup")
+end, opts)
+
+-- <leader>wK = Move editor to above group
+keymap({ "n", "v" }, "<leader>wK", function()
+  vscode.action("workbench.action.moveEditorToAboveGroup")
+end, opts)
+
+-- <leader>wL = Move editor to right group
+keymap({ "n", "v" }, "<leader>wL", function()
+  vscode.action("workbench.action.moveEditorToRightGroup")
 end, opts)
 
 -- <leader>wc = Close editor (matches LazyVim window close)

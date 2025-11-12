@@ -84,6 +84,7 @@ aerospace/.aerospace.toml   → ~/.aerospace.toml (NOT .config/)
 - **VSCode**: All vim motions + `Ctrl+HJKL` (navigate editor/explorer/terminal)
 
 **See detailed shortcuts:**
+- [Vim motions guide](docs/vim-motions.md) - Essential vim motions (ciw, ggVG, registers, etc.)
 - [Neovim keybindings](docs/nvim-shortcuts.md) - LazyVim shortcuts (terminal)
 - [VSCode keybindings](docs/vscode-shortcuts.md) - vscode-neovim shortcuts
 - [tmux keybindings](docs/tmux-shortcuts.md) - Essential → Advanced
@@ -111,8 +112,10 @@ aerospace/.aerospace.toml   → ~/.aerospace.toml (NOT .config/)
 - `K` - Hover docs
 
 **VSCode** (vscode-neovim):
-- `<leader>ff` - Find files (Quick Open)
+- `<leader>ff` - Find files, `<leader>fb` - Find buffers
+- `<leader>,` - Quick buffer switch
 - `<leader>/` - Search in files
+- `<leader>ws/wv` - Split windows, `<leader>wH/J/K/L` - Move editor between splits
 - `Ctrl+/` - Toggle terminal, `Ctrl+d` - Close terminal
 - `t` (in Explorer) - Open terminal at location
 - `<leader>ca` - Code actions
