@@ -113,7 +113,8 @@ aerospace/.aerospace.toml   → ~/.aerospace.toml (NOT .config/)
 **VSCode** (vscode-neovim):
 - `<leader>ff` - Find files (Quick Open)
 - `<leader>/` - Search in files
-- `Ctrl+/` - Toggle terminal
+- `Ctrl+/` - Toggle terminal, `Ctrl+d` - Close terminal
+- `t` (in Explorer) - Open terminal at location
 - `<leader>ca` - Code actions
 - All vim motions work (`ciw`, `dd`, `gg`, etc.)
 

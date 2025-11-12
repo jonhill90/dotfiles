@@ -36,5 +36,10 @@
         "key": "c",
         "command": "filesExplorer.copy",
         "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+    },
+    {
+        "key": "t",
+        "command": "openInIntegratedTerminal",
+        "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
     }
 ]

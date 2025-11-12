@@ -55,14 +55,27 @@
 ### Terminal
 | Shortcut | Description |
 |----------|-------------|
-| `Ctrl+/` | Toggle terminal (opens with focus, closes and returns) |
+| `Ctrl+/` | Toggle terminal (opens with focus, hides and returns) |
+| `Ctrl+d` | Close/kill terminal (standard shell EOF) |
 | `<leader>tn` | New terminal |
 | `Shift+Enter` | Line continuation (`\` + newline) when in terminal |
 
 **Terminal notes**:
 - `Ctrl+/` in editor: Opens terminal with focus
-- `Ctrl+/` in terminal: Closes terminal, returns to editor
+- `Ctrl+/` in terminal: Hides terminal, returns to editor
+- `Ctrl+d`: Sends EOF to shell (closes terminal naturally)
 - May beep on macOS (Chromium/Electron limitation, not fixable)
+
+### Explorer
+| Shortcut | Description |
+|----------|-------------|
+| `c` | Copy file/folder |
+| `t` | Open terminal at selected location |
+
+**Explorer notes**:
+- Focus explorer with `<leader>e`, then use `t` to open terminal at that folder
+- Works on files (opens at parent directory) or folders
+- Uses `Ctrl+h` to return to editor
 
 ### Buffer/Tab Management
 | Shortcut | Description |
@@ -211,7 +224,12 @@
 
 **Terminal**:
 - `Ctrl+/` - Toggle terminal
+- `Ctrl+d` - Close terminal
 - `<leader>tn` - New terminal
+
+**Explorer**:
+- `c` - Copy file/folder
+- `t` - Open terminal at location
 
 **Tabs**:
 - `Shift+h/l` - Previous/next tab
