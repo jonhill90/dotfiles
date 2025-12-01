@@ -159,3 +159,11 @@ function set_term_title() {
   print -Pn "\e]0;%~\a"
 }
 precmd_functions+=(set_term_title)
+
+# Sync Obsidian: iCloud -> OneDrive
+function sss() {
+  rsync -a --update "/Users/jon/Library/Mobile Documents/iCloud~md~obsidian/Documents/Second Brain/" "/Users/jon/Library/CloudStorage/OneDrive-Gentiva/Notebooks/Second Brain/"
+  killall OneDrive 2>/dev/null
+  sleep 2
+  open -a OneDrive
+}
