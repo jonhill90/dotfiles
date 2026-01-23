@@ -167,3 +167,6 @@ function sss() {
   sleep 2
   open -a OneDrive
 }
+
+# Added by Antigravity
+export PATH="/Users/jon/.antigravity/antigravity/bin:$PATH"
