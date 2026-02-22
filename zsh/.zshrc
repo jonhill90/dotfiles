@@ -170,3 +170,6 @@ function sss() {
 
 # Added by Antigravity
 export PATH="/Users/jon/.antigravity/antigravity/bin:$PATH"
+
+# Source local config (not tracked in git)
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
