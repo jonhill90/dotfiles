@@ -190,9 +190,10 @@ stow -R --target="$HOME" package   # Recreate symlinks
 - Custom minimal tmux config (115 lines) + TPM plugins
 - Terraform & Lua LSPs only
 - Modern CLI tools: zoxide, atuin, carapace, fzf
+- Starship prompt
 
 **Roadmap** (not yet implemented):
-- Starship prompt, Catppuccin theme, WezTerm
+- Catppuccin theme, WezTerm
 - Additional LSPs (Python, JSON, YAML, Shell, K8s)
 - Shell vi-mode, bootstrap improvements
 

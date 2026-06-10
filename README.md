@@ -44,7 +44,7 @@ tmux
 **Manual steps** (if needed):
 ```bash
 brew bundle install                                  # Install packages
-stow --target="$HOME" git zsh tmux aerospace nvim ghostty  # Create symlinks
+stow --target="$HOME" git zsh tmux aerospace nvim ghostty starship  # Create symlinks
 ls -la ~ | grep -E "gitconfig|zshrc"                # Verify (look for 'l' and '->')
 ```
 
@@ -170,8 +170,8 @@ neovim, tmux, fzf, zoxide, atuin, carapace, the_silver_searcher, bat, stow, aero
 
 ## Roadmap
 
-**Recently added:** zoxide, atuin, carapace
-**Planned:** Starship prompt, Zsh vi-mode, additional LSPs (Python, JSON, YAML, Shell, K8s)
+**Recently added:** zoxide, atuin, carapace, Starship prompt
+**Planned:** Zsh vi-mode, additional LSPs (Python, JSON, YAML, Shell, K8s)
 **Out of scope:** macOS system preferences, secrets management, SSH keys, non-Neovim IDEs
 
 ## Credits
