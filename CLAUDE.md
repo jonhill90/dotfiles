@@ -80,12 +80,14 @@ Must be installed separately:
 - **Keybinds**: `Alt+HJKL` (focus), `Alt+Shift+HJKL` (move)
 
 ### tmux (tmux)
-- **Config**: Minimal custom (115 lines) at `~/.tmux.conf`
-- **Theme**: Tokyo Night with transparency
+- **Config**: Minimal custom (~120 lines) at `~/.tmux.conf`
+- **Theme**: Tokyo Night with transparency (`fabioluciano/tmux-tokyo-night`)
+  - ⚠️ **PIN to v1.11.0**: `cd ~/.tmux/plugins/tmux-tokyo-night && git checkout v1.11.0`. The plugin was rewritten ("powerkit", v5.x) with a breaking `@theme_*` → `@powerkit_*` config change and the new version renders windows as connected segments. v1.11.0 keeps the **isolated rounded window pills** + keyboard session icon this config is built for. **Do NOT `prefix + U`** (it updates to the broken-look version).
+  - 🍎 **macOS PATH guard** (in `.tmux.conf`): macOS launches the tmux server without `/opt/homebrew/bin` on PATH, so the theme's `run-shell` scripts can't find `tmux`/`jq` and the bar falls back to **green**. An `if-shell '[ -d /opt/homebrew/bin ]'` line sets PATH before plugins load. No-op on Linux/WSL.
 - **Prefix**: `Ctrl+b` (default) or `Ctrl+a` (secondary)
 - **Vi-mode**: Enabled for copy mode
 - **Custom binds**: `|` vertical split, `-` horizontal split, `r` reload, `e` edit config
-- **Plugins** (TPM): vim-tmux-navigator, tmux-yank, tmux-resurrect, tmux-continuum, tmux-fzf-url, tmux-sessionx
+- **Plugins** (TPM): tmux-tokyo-night (theme), vim-tmux-navigator, tmux-yank, tmux-resurrect, tmux-continuum, tmux-fzf-url, tmux-sessionx
 - **Key features**: Dual prefix, mouse support, status bar on top, seamless nvim integration
 - **Keybinds**: `Ctrl+HJKL` navigation (see `docs/tmux-shortcuts.md`)
 
@@ -134,6 +136,12 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 exec zsh
 tmux
 # Press: prefix + I (to install plugins)
+
+# Pin the Tokyo Night theme to the version this config targets (see tmux section).
+# Without this the status bar uses the rewritten "powerkit" version (wrong look).
+cd ~/.tmux/plugins/tmux-tokyo-night && git checkout v1.11.0 && cd ~/.dotfiles
+tmux kill-server   # restart so the themed bar (rounded pills) renders
+
 # Press: Alt+Shift+; then Escape (reload AeroSpace)
 ```
 
@@ -178,6 +186,8 @@ stow -R --target="$HOME" package   # Recreate symlinks
 - **Neovim plugins broken**: `:checkhealth` then `:Lazy restore`
 - **tmux config not applying**: `prefix r` or `tmux kill-server` then restart
 - **tmux plugins not loading**: `prefix I` to install, check `~/.tmux/plugins/tpm` exists
+- **tmux status bar is green / wrong (macOS)**: theme couldn't run — (1) confirm theme pinned to v1.11.0 (`git -C ~/.tmux/plugins/tmux-tokyo-night describe --tags`); (2) the `.tmux.conf` macOS PATH guard must be present (theme needs `/opt/homebrew/bin` for `tmux`/`jq`); (3) `tmux kill-server` — a stale server won't re-theme. Clear `~/.cache/tmux-powerkit` if it was ever on the new plugin version.
+- **tmux windows not rounded pills**: theme drifted off v1.11.0 (likely a `prefix + U`). Re-checkout v1.11.0 and `tmux kill-server`.
 - **Verify symlink**: `ls -la ~/.config/app` (should show `l` and `->`)
 
 ## Current State

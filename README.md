@@ -32,6 +32,12 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 exec zsh
 tmux
 # In tmux: prefix + I to install plugins
+
+# Pin the Tokyo Night theme to the version this config targets (rounded window
+# pills). Newer "powerkit" versions change the look — do NOT prefix + U it.
+cd ~/.tmux/plugins/tmux-tokyo-night && git checkout v1.11.0 && cd ~/.dotfiles
+tmux kill-server   # restart so the themed status bar renders
+
 # AeroSpace: Alt+Shift+; then Escape
 ```
 
