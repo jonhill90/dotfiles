@@ -35,6 +35,11 @@ tmux
 # AeroSpace: Alt+Shift+; then Escape
 ```
 
+**First-run conflicts to expect:**
+- Oh My Zsh's installer writes its own `~/.zshrc` — install it *before* `./install.sh`, then `mv ~/.zshrc ~/.zshrc.backup` so stow can symlink ours.
+- Karabiner-Elements creates `~/.config/karabiner/karabiner.json` (+ `assets/`, `automatic_backups/`) on first launch — if `./install.sh` reports a conflict here, `mv ~/.config/karabiner/karabiner.json ~/.config/karabiner/karabiner.json.backup` and re-run `stow --target="$HOME" karabiner`.
+- After Karabiner-Elements first launches, grant it **Input Monitoring** and **Accessibility** permissions in System Settings, or the caps-lock remap (used by AeroSpace's `Shift-Ctrl-Alt-Cmd` launchers) won't take effect.
+
 **What install.sh does:**
 - Installs Homebrew packages (Brewfile)
 - Installs GNU Stow
@@ -44,7 +49,7 @@ tmux
 **Manual steps** (if needed):
 ```bash
 brew bundle install                                  # Install packages
-stow --target="$HOME" git zsh tmux aerospace nvim ghostty starship  # Create symlinks
+stow --target="$HOME" git zsh tmux aerospace nvim ghostty starship karabiner  # Create symlinks
 ls -la ~ | grep -E "gitconfig|zshrc"                # Verify (look for 'l' and '->')
 ```
 
@@ -71,6 +76,7 @@ aerospace/.aerospace.toml   → ~/.aerospace.toml (NOT .config/)
 │   ├── settings.json
 │   └── keybindings.json
 ├── ghostty/.config/ghostty/config  # Terminal
+├── karabiner/.config/karabiner/karabiner.json  # Caps lock remap
 ├── Brewfile                # Package manifest
 └── install.sh              # Automated setup (includes VSCode symlinks)
 ```

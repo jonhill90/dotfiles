@@ -157,6 +157,8 @@ cask "font-symbols-only-nerd-font"
 cask "ghostty"
 # Development environment
 cask "hashicorp/tap/hashicorp-vagrant"
+# Tool to customize keyboard on macOS
+cask "karabiner-elements"
 # GPU-based terminal emulator
 cask "kitty"
 # Clipboard manager

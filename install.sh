@@ -20,7 +20,7 @@ fi
 
 # Stow all packages with explicit target
 echo "🔗 Creating symlinks..."
-stow --target="$HOME" git zsh tmux aerospace nvim ghostty starship
+stow --target="$HOME" git zsh tmux aerospace nvim ghostty starship karabiner
 
 # VSCode requires OS-specific symlinking (can't use stow)
 echo "🔗 Setting up VSCode configs..."
