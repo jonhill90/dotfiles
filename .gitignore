@@ -1,6 +1,7 @@
 # Secrets and local overrides
 *.local
 *_local
+*_local.ps1
 .env
 .env.*
 
