@@ -4,7 +4,9 @@ AI assistant guidance for working with this dotfiles repository.
 
 ## Overview
 
-**macOS dotfiles repository** managed with GNU Stow. Tracks configs for: zsh, Neovim, tmux, AeroSpace, Ghostty, VSCode, and Homebrew.
+**macOS dotfiles repository** managed with GNU Stow. Tracks configs for: zsh, Neovim, tmux, herdr, AeroSpace, Ghostty, VSCode, and Homebrew.
+
+`AGENT.md` is a symlink to this file, so harnesses looking for either name get the same guidance. Edit `CLAUDE.md`; never replace the symlink with a copy.
 
 ## Critical Constraints
 
@@ -91,6 +93,18 @@ Must be installed separately:
 - **Key features**: Dual prefix, mouse support, status bar on top, seamless nvim integration
 - **Keybinds**: `Ctrl+HJKL` navigation (see `docs/tmux-shortcuts.md`)
 
+### herdr (herdr)
+- **Config**: `~/.config/herdr/config.toml` (XDG standard, stows normally)
+- **What it is**: Terminal workspace manager for AI coding agents; server/client with detach
+- **Model**: workspace ("space") → tab → pane, mapping to tmux session → window → pane
+- **Prefix**: `Ctrl+a` only — herdr supports a single prefix and has **no `send-prefix`**, so literal `Ctrl+a` is unreachable inside panes
+- **Bindings**: Deliberately mirror `.tmux.conf` (`|`/`-` splits, `hjkl` focus, `r` reload, `o` space picker, `d` detach, `C-h`/`C-l` tabs)
+- **Theme**: `tokyo-night` (matches tmux, Neovim, VSCode)
+- **Validate before reload**: `herdr config check` — but note it only compares bindings you explicitly set, **not** against unstated defaults, so a binding that collides with a default can pass as `ok`. Write related keys out explicitly.
+- **Runtime files** (`session.json`, `*.sock`, `*.log`) live in `~/.config/herdr/` and must never be committed; stow links only `config.toml`
+- **Known gaps**: no vi copy mode (mouse-first), no `vim-tmux-navigator` equivalent, no `last_tab`/`last_workspace`/pane-swap actions
+- **Keybinds**: see `docs/herdr-shortcuts.md`
+
 ### Ghostty (ghostty)
 - **Config**: `~/.config/ghostty/config` (XDG standard)
 - **Font**: FiraCode Nerd Font 16pt (thicken enabled)
@@ -103,7 +117,7 @@ Must be installed separately:
 - **Framework**: Oh My Zsh (minimal plugins: git only)
 - **Theme**: Powerlevel10k
 - **FZF**: Integrated with `ag` (silver searcher)
-- **Aliases**: `inv` (nvim+fzf+bat), `vi` (nvim)
+- **Aliases**: `inv` (nvim+fzf+bat), `vi` (nvim), `cdsp` (`claude --dangerously-skip-permissions`)
 
 ### VSCode (vscode)
 - **Config**: `~/.dotfiles/vscode/` (simple structure, not stow-based)
@@ -176,6 +190,7 @@ stow -R --target="$HOME" package   # Recreate symlinks
 
 - **AeroSpace**: `Alt+Shift+;` then `Escape` (or `brew services restart aerospace`)
 - **tmux**: `prefix r` (shows checkmark on status bar) or `tmux source-file ~/.tmux.conf`
+- **herdr**: `herdr config check` first, then `prefix r` or `herdr server reload-config`
 - **Neovim**: `:checkhealth`
 - **Zsh**: `exec zsh`
 - **tmux plugins**: `prefix I` (install), `prefix U` (update)
@@ -198,6 +213,7 @@ stow -R --target="$HOME" package   # Recreate symlinks
 - Powerlevel10k + Tokyo Night theme (shell + Neovim + tmux + VSCode)
 - Ghostty terminal with GPU acceleration + transparency
 - Custom minimal tmux config (115 lines) + TPM plugins
+- herdr agent workspace manager with tmux-mirrored keybindings
 - Terraform & Lua LSPs only
 - Modern CLI tools: zoxide, atuin, carapace, fzf
 - Starship prompt
@@ -213,3 +229,4 @@ stow -R --target="$HOME" package   # Recreate symlinks
 - **docs/nvim-shortcuts.md** - Neovim keybindings reference (LazyVim)
 - **docs/vscode-shortcuts.md** - VSCode + vscode-neovim keybindings reference
 - **docs/tmux-shortcuts.md** - tmux keybindings reference
+- **docs/herdr-shortcuts.md** - herdr keybindings reference + tmux differences

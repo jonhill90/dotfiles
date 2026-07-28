@@ -10,7 +10,7 @@ macOS development environment with GNU Stow. Quick setup for shell, editor, wind
 
 - **Shell**: zsh + Oh My Zsh + Powerlevel10k + modern CLI tools (zoxide, atuin, carapace, fzf)
 - **Editor**: Neovim (LazyVim + Tokyo Night + Terraform/Lua LSPs) + VSCode (vscode-neovim integration)
-- **Multiplexer**: tmux (minimal custom config + TPM plugins + Tokyo Night theme)
+- **Multiplexer**: tmux (minimal custom config + TPM plugins + Tokyo Night theme) · herdr (agent workspace manager, tmux-style binds)
 - **Terminal**: Ghostty (GPU-accelerated with transparency)
 - **Window Manager**: AeroSpace (tiling for macOS)
 - **Package Manager**: Homebrew (Brewfile tracks everything)
@@ -55,7 +55,7 @@ tmux kill-server   # restart so the themed status bar renders
 **Manual steps** (if needed):
 ```bash
 brew bundle install                                  # Install packages
-stow --target="$HOME" git zsh tmux aerospace nvim ghostty starship karabiner  # Create symlinks
+stow --target="$HOME" git zsh tmux herdr aerospace nvim ghostty starship karabiner  # Create symlinks
 ls -la ~ | grep -E "gitconfig|zshrc"                # Verify (look for 'l' and '->')
 ```
 
@@ -74,6 +74,7 @@ aerospace/.aerospace.toml   → ~/.aerospace.toml (NOT .config/)
 ├── git/.gitconfig          # Git base config
 ├── zsh/.zshrc, .p10k.zsh   # Shell + theme (127 + 89KB)
 ├── tmux/.tmux.conf         # Custom tmux (115 lines + TPM plugins)
+├── herdr/.config/herdr/config.toml  # Agent workspace manager (tmux-style binds)
 ├── aerospace/.aerospace.toml  # Window manager
 ├── nvim/.config/nvim/      # Editor (LazyVim + plugins)
 │   ├── lua/config/vscode.lua  # VSCode-specific Neovim config
@@ -84,6 +85,7 @@ aerospace/.aerospace.toml   → ~/.aerospace.toml (NOT .config/)
 ├── ghostty/.config/ghostty/config  # Terminal
 ├── karabiner/.config/karabiner/karabiner.json  # Caps lock remap
 ├── Brewfile                # Package manifest
+├── CLAUDE.md               # AI assistant guidance (AGENT.md symlinks here)
 └── install.sh              # Automated setup (includes VSCode symlinks)
 ```
 
@@ -100,12 +102,14 @@ aerospace/.aerospace.toml   → ~/.aerospace.toml (NOT .config/)
 - [Neovim keybindings](docs/nvim-shortcuts.md) - LazyVim shortcuts (terminal)
 - [VSCode keybindings](docs/vscode-shortcuts.md) - vscode-neovim shortcuts
 - [tmux keybindings](docs/tmux-shortcuts.md) - Essential → Advanced
+- [herdr keybindings](docs/herdr-shortcuts.md) - tmux-style binds + where they differ
 
 ## Highlights
 
 **zsh aliases:**
 - `inv` - Nvim with fzf picker + bat preview
 - `vi` → `nvim`
+- `cdsp` → `claude --dangerously-skip-permissions` (trusted repos only)
 - `z <dir>` - Smart jump (zoxide)
 - `zi` - Interactive jump (zoxide + fzf)
 
@@ -116,6 +120,11 @@ aerospace/.aerospace.toml   → ~/.aerospace.toml (NOT .config/)
 - `prefix -` - Horizontal (top/bottom)
 - `prefix |` - Vertical (left/right)
 - `prefix r` - Reload config
+
+**herdr** (`prefix = Ctrl+a`) - same `-`, `|`, `r`, `hjkl`, `o`, `d` as tmux:
+- `prefix Ctrl+c` - New space, `prefix Shift+w` - Rename space
+- `prefix Shift+j/k` - Next/previous space
+- No vi copy mode and no seamless `Ctrl+hjkl` nvim navigation (see doc)
 
 **Neovim** (terminal):
 - `<leader>sf` - Find files (Telescope)
@@ -164,7 +173,7 @@ omz update       # Oh My Zsh
 ## Dependencies
 
 **Homebrew** (see Brewfile):
-neovim, tmux, fzf, zoxide, atuin, carapace, the_silver_searcher, bat, stow, aerospace, powerlevel10k
+neovim, tmux, herdr, fzf, zoxide, atuin, carapace, the_silver_searcher, bat, stow, aerospace, powerlevel10k
 
 **Manual**:
 - [Oh My Zsh](https://ohmyz.sh/)
