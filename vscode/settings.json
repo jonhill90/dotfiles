@@ -106,9 +106,18 @@
   "mssql.connectionGroups": [
     {
       "name": "ROOT",
-      "id": "3FFA221F-90FE-4E4C-96EA-A609039CC618"
+      "id": "ROOT"
     }
   ],
   "claudeCode.preferredLocation": "panel",
-  "github.copilot.advanced": {}
+  "github.copilot.advanced": {},
+  "workbench.editor.useModal": "some",
+  "yaml.disableSchemaDetection": [
+    "**/.github/workflows/*.yml",
+    "**/.github/workflows/*.yaml",
+    "**/.gitea/workflows/*.yml",
+    "**/.gitea/workflows/*.yaml",
+    "**/.forgejo/workflows/*.yml",
+    "**/.forgejo/workflows/*.yaml"
+  ]
 }
