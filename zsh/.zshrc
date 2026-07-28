@@ -118,6 +118,10 @@ fi
 alias inv='nvim $(fzf -m --preview="bat —-color=always {}")'
 alias vi='nvim'
 
+# Claude Code with permission prompts disabled. Skips every approval gate,
+# including file writes and shell commands, so use it only in repos you trust.
+alias cdsp='claude --dangerously-skip-permissions'
+
 # FZF-powered directory operations
 cpd() {
   local src dest
