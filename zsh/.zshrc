@@ -173,3 +173,8 @@ export PATH="/Users/jon/.antigravity/antigravity/bin:$PATH"
 
 # Source local config (not tracked in git)
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+# agent-dotfiles: pin Copilot Cowork target to personal OneDrive (APM wart 2; see docs/SPEC.md §7)
+export APM_COPILOT_COWORK_SKILLS_DIR="$HOME/Library/CloudStorage/OneDrive-Personal/Cowork/skills"
+# agent-dotfiles: cross-harness agent memory vault (personal, iCloud — never employer storage)
+export AGENT_MEMORY_VAULT="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Agent Memory"
