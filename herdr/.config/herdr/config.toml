@@ -1,0 +1,105 @@
+# herdr configuration
+# Stowed from ~/.dotfiles/herdr/ -> ~/.config/herdr/config.toml
+#
+# Keybindings mirror ~/.dotfiles/tmux/.tmux.conf so muscle memory carries over.
+# Model mapping: tmux session -> herdr workspace, tmux window -> herdr tab.
+#
+# Validate after editing:  herdr config check
+# Reload into running server:  prefix + r   (or: herdr server reload-config)
+
+onboarding = false
+
+[theme]
+# Matches the Tokyo Night theme used in tmux, Neovim, and VSCode.
+name = "tokyo-night"
+
+[keys]
+# tmux uses C-b as primary and C-a as secondary; C-a is the easier reach.
+# Caveat: herdr allows only one prefix and has no send-prefix equivalent, so
+# literal C-a (beginning-of-line in zsh, increment-number in Neovim) is not
+# reachable inside herdr panes. Fall back to Home, or bind an alternative in
+# ~/.zshrc, e.g.  bindkey '^Q' beginning-of-line
+# To revert: comment the line below and uncomment the ctrl+b line.
+prefix = "ctrl+a"
+# prefix = "ctrl+b"
+
+## Config -------------------------------------------------------------------
+# tmux: `bind r source-file`. herdr defaults r to resize mode, so resize moves.
+reload_config = ["prefix+r", "prefix+shift+r"]
+resize_mode = "prefix+ctrl+r"
+# tmux `bind e` edits the config; herdr's nearest equivalent opens scrollback.
+edit_scrollback = "prefix+e"
+
+## Panes --------------------------------------------------------------------
+# tmux: `bind |` splits side-by-side, `bind -` splits stacked.
+# herdr names splits after the divider shape, same convention as the tmux binds.
+split_vertical = ["prefix+|", "prefix+v"]
+split_horizontal = "prefix+minus"   # "minus" is the canonical name for `-`
+close_pane = "prefix+x"
+
+# tmux: `bind -r h/j/k/l select-pane` (already herdr's defaults).
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+
+# tmux: `bind + resize-pane -Z`.
+zoom = ["prefix+z", "prefix+plus"]
+
+# tmux `bind Tab last-window` has no tab-level equivalent in herdr; the closest
+# back-and-forth is pane-level, which the herdr docs suggest binding here.
+last_pane = "prefix+tab"
+cycle_pane_next = ""
+cycle_pane_previous = "prefix+shift+tab"
+
+rename_pane = "prefix+shift+p"
+
+## Tabs (tmux windows) ------------------------------------------------------
+new_tab = "prefix+c"
+# tmux: `bind -r C-h previous-window` / `bind -r C-l next-window`.
+previous_tab = ["prefix+p", "prefix+ctrl+h"]
+next_tab = ["prefix+n", "prefix+ctrl+l"]
+switch_tab = "prefix+1..9"
+# tmux `,` renames the window.
+rename_tab = ["prefix+comma", "prefix+shift+t"]
+close_tab = "prefix+shift+x"
+
+## Workspaces (tmux sessions) -----------------------------------------------
+# tmux-sessionx is bound to `o`; herdr's workspace picker is the analogue.
+workspace_picker = ["prefix+o", "prefix+w"]
+# tmux: `bind C-c new-session`, `bind C-f command-prompt find-session`.
+new_workspace = ["prefix+ctrl+c", "prefix+shift+n"]
+goto = ["prefix+ctrl+f", "prefix+g"]
+rename_workspace = "prefix+shift+w"
+close_workspace = "prefix+shift+d"
+switch_workspace = "prefix+shift+1..9"
+# Cycle spaces without opening the picker. Plain prefix+j/k is unavailable:
+# it silently disables focus_pane_down/up, so shift is required here.
+next_workspace = "prefix+shift+j"
+previous_workspace = "prefix+shift+k"
+
+## Navigate mode ------------------------------------------------------------
+# Local keys that win while navigate mode (prefix+g) is open. By default
+# up/down arrows move between spaces and hjkl moves between panes; this swaps
+# spaces onto j/k and pushes vertical pane movement to the arrows.
+# Left/right arrows always move panes regardless of these settings.
+navigate_workspace_down = "j"
+navigate_workspace_up = "k"
+navigate_pane_down = "down"
+navigate_pane_up = "up"
+navigate_pane_left = "h"
+navigate_pane_right = "l"
+
+## Session ------------------------------------------------------------------
+# tmux detaches with `prefix d`; herdr defaults to `prefix q`. Keep both.
+detach = ["prefix+d", "prefix+q"]
+help = "prefix+?"
+settings = "prefix+s"
+toggle_sidebar = "prefix+b"
+
+[ui]
+# tmux has `set -g mouse on`; herdr is mouse-first already.
+confirm_close = true
+
+[session]
+resume_agents_on_restore = true
