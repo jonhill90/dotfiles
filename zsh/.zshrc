@@ -85,7 +85,13 @@ source <(fzf --zsh)
 # Modern CLI tools
 eval "$(zoxide init zsh)"           # Smart directory jumping
 eval "$(atuin init zsh)"            # Shell history on steroids
-source <(carapace _carapace)        # Better tab completions
+# Completion machinery has no purpose in a non-interactive shell, and
+# carapace does not exit cleanly if its process-substitution reader goes
+# away mid-init (e.g. when Claude Code's shell-snapshot generation sources
+# this file non-interactively and the reader disappears) -- it spins at
+# high CPU forever instead (jonhill90/agent-dotfiles#337). Guard it on
+# interactivity so non-interactive shells never spawn it at all.
+[[ -o interactive ]] && source <(carapace _carapace)        # Better tab completions
 
 # User configuration
 
